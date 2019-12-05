@@ -1,0 +1,49 @@
+$(function () {
+    //tao mang
+    
+    $('[name=checkbox_one]').click(function () {
+        array = [];
+        var message = "";
+
+        if($(this)[0].checked == false)
+        {
+           $('[name=checkbox_all]').prop('checked', false);
+       }
+
+            //Loop through all checked CheckBoxes in GridView.
+            $("#table_lophoc input[type=checkbox]:checked").each(function () {
+                var row = $(this).closest("tr")[0];
+                array.push(row.cells[3].innerText);
+                //alert('hihi');
+            });
+
+            //return true: checked
+            //return false: unchecked
+            return true;
+        });
+
+    $('[name=checkbox_all]').click(function () {
+        array = [];
+        if($('[name=checkbox_all]')[0].checked)
+        {
+            $("#table_lophoc input[type=checkbox]").each(function () {
+                $(this).prop('checked', true);
+                var row = $(this).closest("tr")[0];
+                if(row.cells[2].innerText != 'Mã lớp học')
+                    array.push(row.cells[3].innerText);
+                console.log('mảng  = ', array);
+            });
+
+        }
+        else
+        {
+            $("#table_lophoc input[type=checkbox]:checked").each(function () {
+                $(this).prop('checked', false);
+            });
+        }
+            //return true: checked
+            //return false: unchecked
+            return true;
+        });
+
+});
