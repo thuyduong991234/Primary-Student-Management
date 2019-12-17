@@ -13,7 +13,14 @@ class CTKQNangLucPhamChat extends Model
      public function RenderMaCTKQNangLucPhamChat()
     {
         $ctkqnlpccuoi = CTKQNangLucPhamChat::orderBy('mactkqnanglucphamchat', 'desc')->first();
-        $matieptheo = ((int)($ctkqnlpccuoi->mactkqnanglucphamchat) + 1)."";
+        if($ctkqnlpccuoi)
+        {
+            $matieptheo = ((int)($ctkqnlpccuoi->mactkqnanglucphamchat) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";
+        }
         return $matieptheo;
     }
 

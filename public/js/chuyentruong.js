@@ -27,4 +27,10 @@ $(function() {
          window.location.href=`/QLHS/public/qlchuyentruong?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}&trangthai=${$('[name=Trangthai]').val()}`;
     })
     
+    $('[name=btnXuatexcel]').click(function(e){
+         $("#table_chuyenlophoc").table2excel({
+            name: "DanhSach",
+            filename: `Danh sách ${$('[name=Trangthai]').val()}.xls`, // do include extension
+        });
+    })
 })

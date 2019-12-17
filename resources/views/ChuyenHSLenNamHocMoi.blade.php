@@ -40,7 +40,7 @@
         <div class="container-fluid">
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black">6. Chuyển hồ sơ lên năm học mới</h5>
+              <h5>6. Chuyển hồ sơ lên năm học mới</h5>
             </div> 
           </div>
           <!--Start tab bar-->
@@ -52,7 +52,12 @@
             <li class="nav-item">
               <a class="nav-link" id="hocsinh-tab" data-toggle="tab" href="#hocsinh" role="tab" aria-controls="hocsinh" aria-selected="false">II. Chuyển hồ sơ học sinh</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="moi-tab" data-toggle="tab" href="#moi" role="tab" aria-controls="moi" aria-selected="false">III. Kết quả chuyển hồ sơ lên năm học mới</a>
+            </li>
           </ul>
+
+
           <div style="background-color: white">
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="lophoc" role="tabpanel" aria-labelledby="lophoc-tab">
@@ -61,14 +66,14 @@
                     <h8 style="color: black; font-weight: bold;">Danh sách lớp học năm học {{$namhoc}}</h8>
                   </div> 
                   <div style="float: right;  margin-top: 10px; margin-right: 10px">
-                    <button type="button" name="btnThucHien" class="btn btn-dark" style="background-color: black;">Thực hiện sao chép lớp học</button>
+                    <button type="button" name="btnThucHien_LH" class="btn btn-dark" style="background-color: black;">Thực hiện sao chép lớp học</button>
                   </div> 
                 </div>
 
                 <!--table danh sach lop hoc-->
                 <div class="table-responsive" style="margin-top: 20px">
                   <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
-                    <thead style="background-color: black; color: white;">
+                    <thead style="background-color: #293c74; color: white;">
                       <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Mã lớp học</th>
@@ -91,20 +96,21 @@
                 <!--end table-->
 
               </div>
+
               <div class="tab-pane fade" id="hocsinh" role="tabpanel" aria-labelledby="hocsinh-tab">
                 <div style="height: 50px;">
                   <div style="float: left;  margin-top: 10px; margin-left: 10px">
                     <h8 style="color: black; font-weight: bold;">Thông tin chuyển học sinh năm học {{$namhoc}}</h8>
                   </div> 
                   <div style="float: right;  margin-top: 10px; margin-right: 10px">
-                    <button type="button" name="btnThucHien" class="btn btn-dark" style="background-color: black;">Thực hiện sao chép học sinh</button>
+                    <button type="button" name="btnThucHien_HS" class="btn btn-dark" style="background-color: black;">Thực hiện sao chép học sinh</button>
                   </div> 
                 </div>
 
                 <!--table danh sach lop hoc-->
                 <div class="table-responsive" style="margin-top: 20px">
                   <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
-                    <thead style="background-color: black; color: white;">
+                    <thead style="background-color: #293c74; color: white;">
                       <tr>
                         <th scope="col">STT</th>
                         <th scope="col">Lớp học hiện tại</th>
@@ -118,23 +124,56 @@
                       <tr style="text-align: center;">
                         <th scope="row">{{$loop->iteration}}</th>
                         <td scope="row" style="white-space: nowrap;">{{$LH->tenlophoc}}</td>
-                        <td scope="row" style="white-space: nowrap;">{{$LH->siso}}</td>
+
+                        @php $flag = 0 @endphp
+                        @foreach($listsiso as $siso)
+                        @if($siso->malophoc == $LH->malophoc)
+                        @php $flag = 1 @endphp
+                        <td scope="row" style="white-space: nowrap;">{{$siso->siso}}</td>
+                        @endif
+                        @endforeach
+                        @if($flag == 0)
+                          <td scope="row" style="white-space: nowrap;">0</td>
+                        @endif
+
                         <td align="center">
                          <select class="form-control" style="width: 10rem" name="Lop_con" id="lophocchuyenlen">
+                          @if($data_lophocnamsau)
+                          @php $flag_khoi = 0 @endphp
                           @foreach($data_lophocnamsau as $LHNS)
-                          @if($LHNS->tenlophoc == $LH->tenlophoc)
-                          <option id="{{$LHNS->malophoc}}" selected>{{$LHNS->tenlophoc}}</option>
+                          @if(($LH->khoi + 1) == $LHNS->khoi)
+                          @php $flag_khoi = 1 @endphp
+                          @if(ltrim($LHNS->tenlophoc, $LHNS->tenlophoc[0]) == ltrim($LH->tenlophoc, $LH->tenlophoc[0]))
+                          <option id="{{$LH->malophoc}} - {{$LHNS->malophoc}} - lophocchuyenlen" selected>{{$LHNS->tenlophoc}}</option>
+                          @else
+                          <option id="{{$LH->malophoc}} - {{$LHNS->malophoc}} - lophocchuyenlen">{{$LHNS->tenlophoc}}</option>
                           @endif
+                          @endif
+                          
                           @endforeach
+                          @if($flag_khoi == 0)
+                          <option id="khongco" selected>--Chọn lớp--</option>
+                          @endif
+                          @else
+                          <option id="khongco" selected>--Chọn lớp--</option>
+                          @endif
                         </select>
                       </td>
                       <td align="center">
-                       <select class="form-control" style="width: 10rem" name="Lop_con" d="lophocluuban">
-                        @foreach($data_lophocnamsau as $LHNS)
-                        @if($LHNS->tenlophoc == $LH->tenlophoc)
-                          <option id="{{$LHNS->malophoc}}" selected>{{$LHNS->tenlophoc}}</option>
-                        @endif
-                        @endforeach
+                       <select class="form-control" style="width: 10rem" name="Lop_con" id="lophocluuban">
+                        @if($data_lophocnamsau)
+                          @foreach($data_lophocnamsau as $LHNS)
+                          @if(($LH->khoi) == $LHNS->khoi)
+                          @if($LHNS->tenlophoc == $LH->tenlophoc)
+                          <option id="{{$LH->malophoc}} - {{$LHNS->malophoc}} - lophocluuban" selected>{{$LHNS->tenlophoc}}</option>
+                          @else
+                          <option id="{{$LH->malophoc}} - {{$LHNS->malophoc}} - lophocluuban">{{$LHNS->tenlophoc}}</option>
+                          @endif
+                          @endif
+                          @endforeach
+                          @else
+                          <option id="khongco" selected>--Chọn lớp--</option>
+                          @endif
                       </select>
                     </td>
                   </tr>
@@ -144,6 +183,51 @@
             </div>
             <!--end table-->
           </div>
+
+          <div class="tab-pane fade" id="moi" role="tabpanel" aria-labelledby="moi-tab">
+                <div style="height: 50px;">
+                  <div style="float: left;  margin-top: 10px; margin-left: 10px">
+                    <h8 style="color: black; font-weight: bold;">Danh sách lớp học năm học {{$namhocmoi}}</h8>
+                  </div> 
+                </div>
+
+                <!--table danh sach lop hoc-->
+                <div class="table-responsive" style="margin-top: 20px">
+                  <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
+                    <thead style="background-color: #293c74; color: white;">
+                      <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mã lớp học</th>
+                        <th scope="col">Tên lớp</th>
+                        <th scope="col">Sỉ số</th>
+                        <th scope="col">Khối</th>
+                      </tr>
+                    </thead>
+                    <tbody style="background-color: white; color: black; overflow: auto;">
+                      @foreach($data_lophocnamsau as $LH)
+                      <tr style="text-align: center;">
+                        <th scope="row">{{$loop->iteration}}</th>
+                        <td scope="row" style="white-space: nowrap;">{{$LH->malophoc}}</td>
+                        <td scope="row" style="white-space: nowrap;">{{$LH->tenlophoc}}</td>
+                        @php $flag = 0 @endphp
+                        @foreach($listsisomoi as $siso)
+                        @if($siso->malophoc == $LH->malophoc)
+                        @php $flag = 1 @endphp
+                        <td scope="row" style="white-space: nowrap;">{{$siso->siso}}</td>
+                        @endif
+                        @endforeach
+                        @if($flag == 0)
+                          <td scope="row" style="white-space: nowrap;">0</td>
+                        @endif
+                        <td scope="row" style="white-space: nowrap;">{{$LH->khoi}}</td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <!--end table-->
+
+              </div>
         </div>
       </div>
 
@@ -172,25 +256,6 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -208,7 +273,7 @@
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
 
-<script src="js/ktdx.js"></script>
+<script src="js/chuyenhoso.js"></script>
 
 </body>
 

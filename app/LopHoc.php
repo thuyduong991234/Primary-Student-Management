@@ -13,7 +13,14 @@ class LopHoc extends Model
     public function RenderMaLH()
     {
         $lophoccuoi = LopHoc::orderBy('malophoc', 'desc')->first();
-        $matieptheo = ((int)($lophoccuoi->malophoc) + 1)."";
+        if($lophoccuoi)
+        {
+             $matieptheo = ((int)($lophoccuoi->malophoc) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";
+        }
         return $matieptheo;
     }
 

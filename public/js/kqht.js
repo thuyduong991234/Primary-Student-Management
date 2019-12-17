@@ -1,12 +1,24 @@
-
 var giatricannghe = document.getElementsByName("giatri");
 var giatricannghe_nlpc = document.getElementsByName("nlpc");
+
+
+document.querySelector('.custom-file-input').addEventListener('change',function(e){
+  var fileName = document.getElementById("myInput").files[0].name;
+  var nextSibling = e.target.nextElementSibling;
+  nextSibling.innerText = fileName;
+})
+
 
 $(function() {
 	// body...
 
 	var arraykqht=[];
     var arraynlpc=[];
+    var arraylenlop=[];
+    var arrayhoanthanhctlh=[];
+    var arraykhenthuong=[];
+
+
 
     //
     for(let i=0; i < giatricannghe.length; i++) 
@@ -23,10 +35,10 @@ $(function() {
                         console.log("Không phải số = ",(e.target.innerText)[i]);
                         e.srcElement.style.borderColor = "red";
                         e.srcElement.style.borderWidth = "3px";
-                        $('[name=textloi]')[0].innerText = "";
-                        $("#xuatloi").css({display: "block"});
-                        $('[name=textloi]')[0].append("Bạn cần nhập điểm trong khoảng từ 0 đến 9!");
-                        $("#xuatloi").show()
+                        $('[name=textloi1]')[0].innerText = "";
+                        $("#xuatloi1").css({display: "block"});
+                        $('[name=textloi1]')[0].append("Bạn cần nhập điểm trong khoảng từ 0 đến 9!");
+                        $("#xuatloi1").show();
                         flag = false;
                     }
                 }
@@ -34,7 +46,7 @@ $(function() {
                 {
                     e.srcElement.style.borderColor = "";
                     e.srcElement.style.borderWidth = "";
-                    $("#xuatloi").css({display: "none"});
+                    $("#xuatloi1").css({display: "none"});
                 }
             }
             if(loai == 'mucdatduoc') {
@@ -45,10 +57,10 @@ $(function() {
                         console.log("Không phải T, H, C = ", (e.target.innerText)[i]);
                         e.srcElement.style.borderColor = "red";
                         e.srcElement.style.borderWidth = "3px";
-                         $('[name=textloi]')[0].innerText = "";
-                        $("#xuatloi").css({display: "block"});
-                        $('[name=textloi]')[0].append("Mức đạt được chỉ nhận giá trị T, H, C!");
-                        $("#xuatloi").show()
+                         $('[name=textloi1]')[0].innerText = "";
+                        $("#xuatloi1").css({display: "block"});
+                        $('[name=textloi1]')[0].append("Mức đạt được chỉ nhận giá trị T, H, C!");
+                        $("#xuatloi1").show();
                         flag = false;
                     }
                 }
@@ -56,7 +68,7 @@ $(function() {
                 {
                     e.srcElement.style.borderColor = "";
                     e.srcElement.style.borderWidth = "";
-                    $("#xuatloi").css({display: "none"});
+                    $("#xuatloi1").css({display: "none"});
                 }
             }
         })
@@ -77,10 +89,10 @@ $(function() {
                         console.log("Không phải T, Đ, C = ", (e.target.innerText)[i]);
                         e.srcElement.style.borderColor = "red";
                         e.srcElement.style.borderWidth = "3px";
-                        $('[name=textloi]')[0].innerText = "";
-                        $("#xuatloi").css({display: "block"});
-                        $('[name=textloi]')[0].append("Mức đạt được chỉ nhận giá trị T, Đ, C!");
-                        $("#xuatloi").show()
+                        $('[name=textloi1]')[0].innerText = "";
+                        $('#xuatloi1').css({display: "block"});
+                        $('[name=textloi1]')[0].append("Mức đạt được chỉ nhận giá trị T, Đ, C!");
+                        $('#xuatloi1').show();
                         flag = false;
                     }
                 }
@@ -88,12 +100,44 @@ $(function() {
                 {
                     e.srcElement.style.borderColor = "";
                     e.srcElement.style.borderWidth = "";
-                    $("#xuatloi").css({display: "none"});
+                    $("#xuatloi1").css({display: "none"});
                 }
             }
         })
     }
 
+
+    $('[name=checkbox_one]').each(function () {
+
+        if($(this)[0].checked)
+        {
+            arraylenlop.push($(this)[0].attributes[2].value);
+            console.log("lenlop = ", arraylenlop);
+        }
+
+        return true;
+        });
+
+    $('[name=checkbox_one1]').each(function () {
+
+        if($(this)[0].checked)
+        {
+            arrayhoanthanhctlh.push($(this)[0].attributes[2].value);
+            console.log("hoanthanh = ", arrayhoanthanhctlh);
+        }
+
+        return true;
+        });
+
+    $('[name=checkbox_one2]').each(function () {
+
+        if($(this)[0].checked)
+        {
+            arraykhenthuong.push($(this)[0].attributes[2].value);
+            console.log("khenthuong = ", arraykhenthuong);
+        }
+        return true;
+        });
     //chon khoi, lop la loc du lieu
 
 	$('[name=Khoi]').change(function(){
@@ -117,6 +161,54 @@ $(function() {
          });
 
     //cach lay val conteneditable
+
+    $('[name=checkbox_one]').click(function () {
+
+        if($(this)[0].checked)
+        {
+            arraylenlop.push($(this)[0].attributes[2].value);
+           console.log("lenlop = ", arraylenlop);
+        }
+        else
+        {
+            arraylenlop.splice(arraylenlop.indexOf($(this)[0].attributes[2].value), 1);
+            console.log("lenlop = ", arraylenlop);
+        }
+
+        return true;
+        });
+
+    $('[name=checkbox_one1]').click(function () {
+
+        if($(this)[0].checked)
+        {
+            arrayhoanthanhctlh.push($(this)[0].attributes[2].value);
+            console.log("hoanthanh = ",arrayhoanthanhctlh);
+        }
+        else
+        {
+            arrayhoanthanhctlh.splice(arrayhoanthanhctlh.indexOf($(this)[0].attributes[2].value), 1);
+            console.log("hoanthanh = ",arrayhoanthanhctlh);
+        }
+
+        return true;
+        });
+
+    $('[name=checkbox_one2]').click(function () {
+
+        if($(this)[0].checked)
+        {
+            arraykhenthuong.push($(this)[0].attributes[2].value);
+            console.log("khenthuong = ",arraykhenthuong);
+        }
+        else
+        {
+            arraykhenthuong.splice(arraykhenthuong.indexOf($(this)[0].attributes[2].value), 1);
+            console.log("khenthuong = ",arraykhenthuong);
+        }
+
+        return true;
+        });
 
     $('[name=btnCapNhat]').click(function(e){
          $('[name=giatri]').each(function(){
@@ -146,7 +238,11 @@ $(function() {
                     data: {
                         kqht: arraykqht,
                         nlpc: arraynlpc,
-                        thoidiemdanhgia: $('[name=Thoidiemdanhgia]').val()
+                        thoidiemdanhgia: $('[name=Thoidiemdanhgia]').val(),
+                        arraylenlop: arraylenlop,
+                        arrayhoanthanhctlh: arrayhoanthanhctlh,
+                        arraykhenthuong: arraykhenthuong,
+                        malophoc: $('[name=Lop] option:selected').attr("id")
                     },
                     success: function (msg) {
                         console.log(msg);
@@ -164,6 +260,10 @@ $(function() {
                         // do something here borderWidthcause of error
                     }
                 })
+    })
+
+    $('[name=btnXuatexcel]').click(function(e){
+        window.location.href=`/QLHS/public/xuatexcelKQHT?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}&thoidiemdanhgia=${$('[name=Thoidiemdanhgia]').val()}`;
     })
     
 })

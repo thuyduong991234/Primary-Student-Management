@@ -33,7 +33,7 @@
       <div id="content">
 
         <!-- Topbar -->
-      @include('Templates.Header')
+        @include('Templates.Header')
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -41,17 +41,17 @@
           <!--Start area button-->
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black"> 2.1 Nhập hồ sơ giáo viên</h5>
+              <h5 style="color: #293c74; font-weight: bold;"> 2. Nhập hồ sơ giáo viên</h5>
             </div>
             <div style="float: right;">
               <!-- Large modal -->
-              <button type="button" name="modalThemGiaoVien" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: black">Thêm mới</button>
+              <button type="button" name="modalThemGiaoVien" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: #293c74">Thêm mới</button>
 
               <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Chi tiết Hồ sơ giáo viên</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="color: #293c74; font-weight: bold;">Chi tiết Hồ sơ giáo viên</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -60,12 +60,13 @@
                   <!--modal body -->
                   <div class="modal-body">
                     <div class = "row">
-                    <div class="col"  style="margin-bottom: 10px">  
-                      <div>
+                      <div class="col"  style="margin-bottom: 10px">  
+                        <div>
                          <span style="color: black; font-weight: bold">Họ và tên</span>
+                         <span style="color: red; font-weight: bold">(*)</span>
                          <input required="true" type="text" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="tengiaovien">
-                      </div>
-                      <div id="noteName" style="display: none; width: 13rem; float: right; margin-right: 10px">
+                       </div>
+                       <div id="noteName" style="display: none; width: 13rem; float: right; margin-right: 10px">
                         <i class="fas fa-exclamation-triangle" style="color: red"></i>
                         <span style="color: red">Vui lòng điền họ và tên giáo viên.</span>
                       </div>
@@ -73,17 +74,16 @@
                     <div class="col" style="margin-bottom: 10px">
                       <span style="color: black; font-weight: bold">Dân tộc</span>
                       <select class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="dantoc">
-                        <option selected>Kinh</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($bieumau->dantoc as $DT)
+                        <option>{{$DT["C"]}}</option>
+                        @endforeach
                       </select>
                     </div>
                     <div class="w-100"></div>
                     <div class="col" style="margin-bottom: 10px">
                       <div>
                         <span style="color: black; font-weight: bold">Ngày sinh</span>
+                        <span style="color: red; font-weight: bold">(*)</span>
                         <input type="date" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="ngaysinh">
                       </div>
                       <div id="noteNgaysinh" style="display: none; width: 13rem; float: right; margin-right: 10px">
@@ -94,17 +94,18 @@
                     <div class="col" style="margin-bottom: 10px">
                       <span style="color: black; font-weight: bold">Quốc tịch</span>
                       <select class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="quoctich">
-                        <option selected>Việt Nam</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        @foreach($bieumau->quoctich as $QT)
+                        @if($loop->iteration > 3)
+                        <option {!! $QT["C"] == "Việt Nam"  ? "selected" : "" !!} >{{$QT["C"]}}</option>
+                        @endif
+                        @endforeach
                       </select>
                     </div>
                     <div class="w-100"></div>
                     <div class="col" style="margin-bottom: 10px">
                       <div>
                         <span style="color: black; font-weight: bold">Giới tính</span>
+                        <span style="color: red; font-weight: bold">(*)</span>
                         <select class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="gioitinh">
                           <option selected>Nam</option>
                           <option>Nữ</option>
@@ -118,16 +119,16 @@
                     <div class="w-100"></div>
                     <div class="col" style="margin-bottom: 10px">
                       <span style="color: black; font-weight: bold">Trạng thái cán bộ</span>
+                      <span style="color: red; font-weight: bold">(*)</span>
                       <select class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="trangthai">
                         <option selected>Đang làm việc</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option>Nghỉ hưu</option>
+                        <option>Nghỉ việc</option>
                       </select>
                     </div>
                     <div class="col" style="margin-bottom: 10px">
                       <span style="color: black; font-weight: bold">Nhóm chức vụ</span>
+                      <span style="color: red; font-weight: bold">(*)</span>
                       <select class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="nhomchucvu">
                         <option selected>Giáo viên chủ nhiệm</option>
                         <option>Tổ trưởng</option>
@@ -138,8 +139,15 @@
                     </div>
                     <div class="w-100"></div>
                     <div class="col" style="margin-bottom: 10px">
-                      <span style="color: black; font-weight: bold">CMND/TCC</span>
-                      <input type="text" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="cmnd">
+                      <div>
+                        <span style="color: black; font-weight: bold">CMND/TCC</span>
+                        <span style="color: red; font-weight: bold">(*)</span>
+                        <input type="text" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="cmnd">
+                      </div>
+                      <div id="noteCMND" style="display: none; width: 13rem; float: right; margin-right: 10px">
+                        <i class="fas fa-exclamation-triangle" style="color: red"></i>
+                        <span style="color: red">Vui lòng điền CMND/TCC của giáo viên.</span>
+                      </div>
                     </div>
                     <div class="col" style="margin-bottom: 10px">
                       <span style="color: black; font-weight: bold">Số điện thoại</span>
@@ -153,111 +161,166 @@
                     <div class="col" style="margin-bottom: 10px"></div>
                     <div class="w-100"></div>
                   </div>
-            </div>
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" name="btnGhiGiaoVien">Ghi</button>
-              <button type="button" class="btn btn-primary">Ghi và thêm</button>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="taotaikhoan-tab" data-toggle="tab" href="#taotaikhoan" role="tab" aria-controls="taotaikhoan" aria-selected="true" style="color: blue; font-weight: bold;">Tạo tài khoản</a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="taotaikhoan" role="tabpanel" aria-labelledby="taotaikhoan-tab">
+                      <div class="row" style="margin-top: 20px">
+                        <div class="col"></div>
+                        <div class="col-8" style="margin-bottom: 10px">
+                          <div>
+                            <span style="color: black; font-weight: bold">Tài khoản:</span>
+                            <input type="text" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="taikhoan">
+                          </div>
+                          <div id="noteTaiKhoan" style="display: none; float: right; margin-right: 10px">
+                            <i class="fas fa-exclamation-triangle" style="color: red"></i>
+                            <span style="color: red">Vui lòng điền tên tài khoản của giáo viên.</span>
+                          </div>
+                        </div>
+                        <div class="col"></div>
+                        <div class="w-100"></div>
+                        <div class="col"></div>
+                        <div class="col-8" style="margin-bottom: 10px">
+                          <div>
+                            <span style="color: black; font-weight: bold">Mật khẩu:</span>
+                            <input type="password" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="password">
+                          </div>
+                          <div id="noteMatKhau" style="clear: right;display: none; flex-direction: row-reverse; margin-right: 10px">
+                            <div><i class="fas fa-exclamation-triangle" style="color: red"></i>
+                              <span style="color: red">Vui lòng điền mật khẩu.</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col"></div>
+                        <div class="w-100"></div>
+                        <div class="col"></div>
+                        <div class="col-8" style="margin-bottom: 10px">
+                          <span style="color: black; font-weight: bold">Nhập lại mật khẩu:</span>
+                          <input type="password" class="form-control" style="width: 13rem; float: right; margin-right: 10px" name="repassword">
+                        </div> 
+                        <div class="col"></div>                    
+                        <div class="w-100"></div>
+                        <div class="col"></div>
+                        <div class="col-8" style="display: flex; justify-content: center; margin-top: 20px">
+                         <button type="button" class="btn btn-dark" name="btnTaoTaiKhoan" style="background-color: #293c74">Tạo tài khoản</button>
+                       </div>
+                       
+                       <div class="col"></div>                     
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
+               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" name="btnGhiGiaoVien" style="background-color: #293c74">Ghi</button>
+              </div>
+              <div class="card bg-danger text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="xuatloi">
+                <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+                  <i class="fas fa-exclamation-circle fa-2x" style="color: white; margin-right: 5px"></i>
+                  <span name = "textloi"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="ghigv_thanhcong">
+            <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+              <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
             </div>
           </div>
         </div>
-        <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="ghigv_thanhcong">
-          <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
-            <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
-          </div>
-        </div>
+        <button type="button" class="btn btn-dark" name="btnXoa" data-toggle="modal" data-target=".xoa-modal" style="background-color: #293c74">Xóa giáo viên</button>
+        <button type="button" class="btn btn-dark" name="btnXuatexcel" style="background-color: #293c74">Xuất Excel</button>
       </div>
-      <button type="button" class="btn btn-dark" style="background-color: black">Thêm với Excel</button>
-      <button type="button" class="btn btn-dark" name="btnXoa" style="background-color: black">Xóa giáo viên</button>
-      <button type="button" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
     </div>
-  </div>
-  <div class="row" style="margin-bottom: 10px">
-    <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-      <span style="color: black">Tên giáo viên:</span>
-      <select class="form-control" style="width: 15rem; margin-left: 5px" name="tengv">
-        @foreach($listgv as $GV)
-        @if($magiaovien)
-            @if($magiaovien == $GV->magv)
-              <option id="{{$GV->magv}}" selected>{{$GV->tengv}}</option>
-            @else
-              <option id="{{$GV->magv}}">{{$GV->tengv}}</option>
-            @endif
+    <div class="row" style="margin-bottom: 10px">
+      <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
+        <span style="color: #293c74; font-weight: bold;">Tên giáo viên:</span>
+        <select class="form-control" style="width: 15rem; margin-left: 5px" name="tengv">
+          @foreach($listgv as $GV)
+          @if($magiaovien)
+          @if($magiaovien == $GV->magv)
+          <option id="{{$GV->magv}}" selected>{{$GV->tengv}}</option>
           @else
-              <option id="{{$GV->magv}}">{{$GV->tengv}}</option>
+          <option id="{{$GV->magv}}">{{$GV->tengv}}</option>
           @endif
-        @endforeach
-      </select>
+          @else
+          <option id="{{$GV->magv}}">{{$GV->tengv}}</option>
+          @endif
+          @endforeach
+        </select>
+      </div>
+      <div class="col-md-auto" style="margin-right: 10px">
+      </div>
     </div>
-    <div class="col-md-auto" style="margin-right: 10px">
+    <!--End area button-->
+
+    <!--table hồ sơ giáo viên-->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_giaovien">
+        <thead style="background-color: #293c74; color: white;">
+          <tr>
+            <th scope="col">STT</th>
+            <th class="noExl" scope="col"><input type="checkbox" name="checkbox_all" style="width: 20px; height: 20px;"></th>
+            <th class="noExl" scope="col">Sửa</th>
+            <th scope="col">Mã giáo viên</th>
+            <th scope="col">Họ và tên</th>
+            <th scope="col">CMND/TCC</th>
+            <th scope="col">Ngày sinh</th>
+            <th scope="col">Giới tính</th>
+            <th scope="col">Trạng thái cán bộ</th>
+            <th scope="col">Dân tộc</th>
+            <th scope="col">Quốc tịch</th>
+            <th scope="col">Quê quán</th>
+            <th scope="col">Điện thoại</th>
+            <th scope="col">Email</th>
+            <th scope="col">Nhóm chức vụ</th>
+          </tr>
+        </thead>
+        <tbody style="background-color: white; color: black; overflow: auto;">
+          @foreach($data as $GV)
+          <tr>
+            <th scope="row">{{$loop->iteration}}</th>
+            <td class="noExl" align="center">
+              <input type="checkbox" name = "checkbox_one" style="width: 20px; height: 20px;">
+            </td>
+            <td class="noExl" align="center">
+              <i class="fas fa-user-edit" style="color: #293c74" name = "btnEditGV" data-toggle="modal" data-target=".bd-example-modal-lg"></i>
+            </td>
+            <td>{{$GV -> magv}}</td>
+            <td>{{$GV -> tengv}}</td>
+            <td>{{$GV -> cmnd}}</td>
+            <td>{{date("d/m/Y", strtotime($GV -> ngaysinh))}}</td>
+            <td>{{$GV -> gioitinh}}</td>
+            <td>{{$GV -> trangthaicanbo}}</td>
+            <td>{{$GV -> dantoc}}</td>
+            <td>{{$GV -> quoctich}}</td>
+            <td>{{$GV -> quequan}}</td>
+            <td>{{$GV -> dienthoai}}</td>
+            <td>{{$GV -> email}}</td>
+            <td>{{$GV -> nhomchucvu}}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
-  </div>
-  <!--End area button-->
+    <!--end table-->
 
-  <!--table hồ sơ giáo viên-->
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_giaovien">
-      <thead style="background-color: black; color: white;">
-        <tr>
-          <th scope="col">STT</th>
-          <th scope="col"><input type="checkbox" name="checkbox_all" style="width: 20px; height: 20px;"></th>
-          <th scope="col">Sửa</th>
-          <th scope="col">Mã giáo viên</th>
-          <th scope="col">Họ và tên</th>
-          <th scope="col">CMND/TCC</th>
-          <th scope="col">Ngày sinh</th>
-          <th scope="col">Giới tính</th>
-          <th scope="col">Trạng thái cán bộ</th>
-          <th scope="col">Dân tộc</th>
-          <th scope="col">Quốc tịch</th>
-          <th scope="col">Quê quán</th>
-          <th scope="col">Điện thoại</th>
-          <th scope="col">Email</th>
-          <th scope="col">Nhóm chức vụ</th>
-        </tr>
-      </thead>
-      <tbody style="background-color: white; color: black; overflow: auto;">
-        @foreach($data as $GV)
-        <tr>
-          <th scope="row">{{$loop->iteration}}</th>
-          <td align="center">
-            <input type="checkbox" name = "checkbox_one" style="width: 20px; height: 20px;">
-          </td>
-          <td align="center">
-              <i class="fas fa-user-edit" name = "btnEditGV" data-toggle="modal" data-target=".bd-example-modal-lg"></i>
-          </td>
-          <td>{{$GV -> magv}}</td>
-          <td>{{$GV -> tengv}}</td>
-          <td>{{$GV -> cmnd}}</td>
-          <td>{{date("d/m/Y", strtotime($GV -> ngaysinh))}}</td>
-          <td>{{$GV -> gioitinh}}</td>
-          <td>{{$GV -> trangthaicanbo}}</td>
-          <td>{{$GV -> dantoc}}</td>
-          <td>{{$GV -> quoctich}}</td>
-          <td>{{$GV -> quequan}}</td>
-          <td>{{$GV -> dienthoai}}</td>
-          <td>{{$GV -> email}}</td>
-          <td>{{$GV -> nhomchucvu}}</td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>
   </div>
-  <!--end table-->
-
-</div>
 </div>
 <!-- /.container-fluid -->
+
 </div>
 <!-- End of Main Content -->
 
 </div>
 <!-- End of Content Wrapper -->
-<div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none" id="xoagv_thanhcong">
-  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
-    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
-  </div>
-</div>
+
+
 </div>
 <!-- End of Page Wrapper -->
 
@@ -266,31 +329,40 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Xoa Modal-->
+<div class="modal fade xoa-modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-body">Bạn có chắc muốn xóa không?</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+        <a class="btn btn-primary" name="btnXacNhanXoa">Xóa</a>
       </div>
     </div>
   </div>
+  <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none" id="xoagv_thanhcong">
+  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
+  </div>
+</div>
 </div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/export/xlsx.core.min.js"></script>
+<script src="js/export/FileSaver.js"></script>
+<script src="js/export/tableexport.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>

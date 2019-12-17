@@ -41,17 +41,17 @@
           <!--Start area button-->
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black"> 4.3.1 Nhập khen thưởng cuối năm</h5>
+              <h5> 4.3.1 Nhập khen thưởng cuối năm</h5>
             </div>
 
             <div style="float: right;">
              <button type="button" name="btnCapNhat" class="btn btn-dark" style="background-color: black;">Cập nhật</button>
-             <button type="button" name="btnXuatExcel" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
+             <button type="button" name="btnXuatexcel" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
            </div>
          </div>
          <div class="row" style="margin-bottom: 10px">
           <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-            <span style="color: black">Khối:</span>
+            <span style="color: #293c74; font-weight: bold;">Khối:</span>
             <select class="form-control" style="width: 10rem; margin-left: 5px" name="Khoi">
              @for ($i = 1; $i <= 5; $i++)
              @if($khoi)
@@ -63,12 +63,11 @@
              @else
              <option>{{$i}}</option>
              @endif
-
              @endfor
            </select>
          </div>
          <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-          <span style="color: black">Lớp:</span>
+          <span style="color: #293c74; font-weight: bold;">Lớp:</span>
           <select class="form-control" style="width: 10rem; margin-left: 5px" name="Lop">
             @foreach($data_lophoc as $LH)
             @if($lop)
@@ -90,7 +89,7 @@
       <!--table danh sach khen thuong-->
       <div class="table-responsive">
         <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
-          <thead style="background-color: black; color: white;">
+          <thead style="background-color: #293c74; color: white;">
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Họ và tên</th>
@@ -106,9 +105,20 @@
             <th scope="row">{{$loop->iteration}}</th>
             <td scope="row" style="white-space: nowrap;">{{$HS->tenhocsinh}}</td>
             <td scope="row" style="white-space: nowrap;">{{$HS->ngaysinh}}</td>
-            <td scope="row" name="noidung" giatri="khenthuongcanam - {{$HS->mahocsinh}}" contenteditable="true"></td>
-            <td scope="row" name="noidung" contenteditable="true"></td>
-            <td scope="row" name="noidung" contenteditable="true"></td>
+            @php $flag = 0 @endphp
+           @foreach($data_khenthuong as $KT)
+            @if ($HS->mahocsinh==$KT->mahocsinh)
+            @php $flag = 1 @endphp
+            <td scope="row" name="noidung" giatri="khenthuongcanam - {{$HS->mahocsinh}}" contenteditable="true">{{$KT->khenthuongcanam}}</td>
+            <td scope="row" name="noidung" giatri="kyluatcanam - {{$HS->mahocsinh}}" contenteditable="true">{{$KT->kyluatcanam}}</td>
+            <td scope="row" name="noidung" giatri="songaynghicanam - {{$HS->mahocsinh}}" contenteditable="true">{{$KT->songaynghicanam}}</td>
+            @endif
+             @endforeach
+             @if($flag == 0)
+          <td scope="row" name="noidung" giatri="khenthuongcanam - {{$HS->mahocsinh}}" contenteditable="true"></td>
+          <td scope="row" name="noidung" giatri= "kyluatcanam - {{$HS->mahocsinh}}"contenteditable="true"></td>
+          <td scope="row" name="noidung" giatri= "songaynghicanam - {{$HS->mahocsinh}}"contenteditable="true"></td>
+          @endif
           </tr>
             @endforeach
           </tbody>
@@ -124,6 +134,12 @@
 
 </div>
 <!-- End of Content Wrapper -->
+<div class="card bg-danger text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="xuatloi">
+  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+    <i class="fas fa-exclamation-circle fa-2x" style="color: white; margin-right: 5px"></i>
+    <span name = "textloi"></span>
+  </div>
+</div>
 <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="capnhat_thanhcong">
   <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
     <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
@@ -137,27 +153,10 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -173,7 +172,7 @@
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
 
-<script src="js/ktdx.js"></script>
+<script src="js/kttn.js"></script>
 
 </body>
 

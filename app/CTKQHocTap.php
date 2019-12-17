@@ -13,7 +13,14 @@ class CTKQHocTap extends Model
     public function RenderMaCTKQHocTap()
     {
         $ctkqhtcuoi = CTKQHocTap::orderBy('mactkqhoctap', 'desc')->first();
-        $matieptheo = ((int)($ctkqhtcuoi->mactkqhoctap) + 1)."";
+        if($ctkqhtcuoi)
+        {
+            $matieptheo = ((int)($ctkqhtcuoi->mactkqhoctap) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";
+        }
         return $matieptheo;
     }
 

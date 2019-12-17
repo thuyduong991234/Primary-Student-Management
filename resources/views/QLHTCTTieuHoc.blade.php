@@ -41,17 +41,16 @@
           <!--Start area button-->
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black"> 4.4 Quản lý hoàn thành chương trình tiểu học</h5>
+              <h5> 4.4 Quản lý hoàn thành chương trình tiểu học</h5>
             </div>
 
             <div style="float: right;">
              <button type="button" name="btnCapNhat" class="btn btn-dark" style="background-color: black;">Cập nhật</button>
-             <button type="button" name="btnXuatExcel" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
            </div>
          </div>
          <div class="row" style="margin-bottom: 10px">
          <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-          <span style="color: black">Lớp:</span>
+          <span style="color: #293c74; font-weight: bold;">Lớp:</span>
           <select class="form-control" style="width: 10rem; margin-left: 5px" name="Lop">
             @foreach($data_lophoc as $LH)
             @if($lop)
@@ -73,7 +72,7 @@
       <!--table danh sach khen thuong-->
       <div class="table-responsive">
         <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
-          <thead style="background-color: black; color: white;">
+          <thead style="background-color: #293c74; color: white;">
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Mã học sinh</th>
@@ -133,24 +132,6 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

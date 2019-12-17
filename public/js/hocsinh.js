@@ -1,21 +1,40 @@
+document.querySelector('.custom-file-input').addEventListener('change',function(e){
+  var fileName = document.getElementById("myInput").files[0].name;
+  var nextSibling = e.target.nextElementSibling;
+  nextSibling.innerText = fileName;
+})
+
 $(function () {
     var array = [];
     var mahocsinh_choose="";
     var flag;
 
+    $('[name=tinh]').change(function() {
+
+        $('[name=huyen]').find('option').remove();
+        let currentTinh = $(this).val();
+
+        for(let i = 5; i < HuyenData.size; i++) {
+            if(HuyenData[i].F == currentTinh) {
+            // thêm option
+            $('[name=huyen]').append(new Option(HuyenData[i].C, HuyenData[i].C));
+        }
+    }
+});
+
     $('[name=Khoi]').change(function(){
-         window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}`;
-    })
+       window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}`;
+   })
 
     $('[name=Lop]').change(function(e){
         //console.log('e la gi = ', $('[name=Lop] option:selected').attr("id"));
 
-         window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}`;
+        window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}`;
     })
 
     $('[name=Trangthai]').change(function(e){
-         window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}&trangthai=${$('[name=Trangthai]').val()}`;
-    })
+       window.location.href=`/QLHS/public/hshs?khoi=${$('[name=Khoi]').val()}&lop=${$('[name=Lop] option:selected').attr("id")}&trangthai=${$('[name=Trangthai]').val()}`;
+   })
 
     $('[name=checkbox_one]').click(function () {
         array = [];
@@ -23,8 +42,8 @@ $(function () {
 
         if($(this)[0].checked == false)
         {
-           $('[name=checkbox_all]').prop('checked', false);
-       }
+         $('[name=checkbox_all]').prop('checked', false);
+     }
 
             //Loop through all checked CheckBoxes in GridView.
             $("#table_hocsinh input[type=checkbox]:checked").each(function () {
@@ -67,7 +86,7 @@ $(function () {
         });
 
 
-    $('[name=btnXoa]').click(function() {
+    $('[name=btnXacNhanXoa]').click(function() {
         $.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -81,15 +100,15 @@ $(function () {
             },
             success: function( msg ) {
                 if(msg == "Xóa hồ sơ học sinh thành công!")
-                        {
+                {
                             //location.reload();
                             $("#xoahs_thanhcong").css({display: "block"});
                             $("#xoahs_thanhcong").children().append(msg).show();
                             setTimeout(function(){location.reload()}, 2000);
                             
                         }
-            },
-            error: function(xhr) {
+                    },
+                    error: function(xhr) {
          console.log(xhr.responseText); // this line will save you tons of hours while debugging
         // do something here because of error
     }
@@ -98,9 +117,50 @@ $(function () {
 
     $('[name=modalThemHocSinh]').click(function() {
         flag = 1;
+
         //khoi
         $('[name=khoi]').val($('[name=Khoi]').val());
         $('[name=lop]').val($('[name=Lop]').val());
+        $('[name=tenhocsinh]').val("");
+        $('[name=ngaysinh]').val("");
+        $('[name=gioitinh]').val("Nam");
+        $('[name=trangthai]').val("Đang học");
+        $('[name=dantoc]').val("Kinh");
+        $('[name=quoctich]').val("Việt Nam");
+        $('[name=tinh]').val("Thành phố Hà Nội");
+        $('[name=huyen]').val("Quận Ba Đình");
+        $('[name=xa]').val("");
+        $('[name=noisinh]').val("");
+        $('[name=choohientai]').val("");
+        $('[name=sdt]').val("");
+        $('[name=khuvuc]').val("Đồng bằng");
+        $('[name=loaikhuyettat]').val("Không");
+        $('[name=dtcs]').val("Không");               
+        $('[name=mienhocphi]').prop('checked', false);
+        $('[name=giamhocphi]').prop('checked', false);
+        $('[name=doivien]').prop('checked', false);
+        $('[name=luubannamtruoc]').prop('checked', false);
+        $('[name=hotencha]').val("");
+        $('[name=nghenghiepcha]').val("");
+        $('[name=namsinhcha]').val("");
+        $('[name=hotenme]').val("");
+        $('[name=nghenghiepme]').val("");
+        $('[name=namsinhme]').val("");
+        $('[name=hotenngh]').val("");
+        $('[name=nghenghiepngh]').val("");
+        $('[name=namsinhngh]').val("");
+
+
+        $('[name=huyen]').find('option').remove();
+        //Đưa Huyện mặc định của Tp Hà hội vào trước
+        let currentTinh = $('[name=tinh]').val();
+        //alert(`tỉnh = ${currentTinh}`);
+        for(let i = 5; i < HuyenData.size; i++) {
+            if(HuyenData[i].F == currentTinh) {
+            // thêm option
+            $('[name=huyen]').append(new Option(HuyenData[i].C, HuyenData[i].C));
+            }
+        }
 
     })
 
@@ -113,62 +173,62 @@ $(function () {
         //}
         //else
        // {
-            $("#noteName").css({display: "none"});
-            $.ajaxSetup({
-                headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            if (flag == 1) {
-                $.ajax({
-                    url: '/QLHS/public/ghi-hs',
-                    type: 'POST',
-                    data: {
-                        hocsinh: {
-                            malophoc: $('[name=Lop]').children('option:selected').attr("id"),
-                            tenhocsinh: $('[name=tenhocsinh]').val(),
-                            ngaysinh: $('[name=ngaysinh]').val(),
-                            gioitinh: $('[name=gioitinh]').val(),
-                            trangthaihocsinh: $('[name=trangthai]').val(),
-                            dantoc: $('[name=dantoc]').val(),
-                            quoctich: $('[name=quoctich]').val(),
-                            tinh: $('[name=tinh]').val(),
-                            huyen: $('[name=huyen]').val(),
-                            xa: $('[name=xa]').val(),
-                            noisinh: $('[name=noisinh]').val(),
-                            choohientai: $('[name=choohientai]').val(),
-                            sodt: $('[name=sdt]').val(),
-                            khuvuc: $('[name=khuvuc]').val(),
-                            loaikhuyettat: $('[name=loaikhuyettat]').val(),
-                            doituongchinhsach: $('[name=dtcs]').val(),
-                            mienhocphi: $('[name=mienhocphi]')[0].checked,
-                            giamhocphi: $('[name=giamhocphi]')[0].checked,
-                            doivien: $('[name=doivien]')[0].checked,
-                            luubannamtruoc: $('[name=luubannamtruoc]')[0].checked,
-                            hotencha: $('[name=hotencha]').val(),
-                            nghenghiepcha: $('[name=nghenghiepcha]').val(),
-                            namsinhcha: $('[name=namsinhcha]').val(),
-                            hotenme: $('[name=hotenme]').val(),
-                            nghenghiepme: $('[name=nghenghiepme]').val(),
-                            namsinhme: $('[name=namsinhme]').val(),
-                            hotenngh: $('[name=hotenngh]').val(),
-                            nghenghiepngh: $('[name=nghenghiepngh]').val(),
-                            namsinhngh: $('[name=namsinhngh]').val()
-                        }
-                    },
-                    success: function (msg) {
-                        console.log(msg);
-                        if(msg.ngaysinh)
-                        {
-                            $("#noteNgaysinh").css({display: "block"});
-                        }
-                        if(msg.tenhocsinh)
-                        {
-                            $("#noteName").css({display: "block"});
-                        }
-                        if(msg == "Ghi hồ sơ học sinh thành công!")
-                        {
+        $("#noteName").css({display: "none"});
+        $.ajaxSetup({
+            headers:
+            {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        if (flag == 1) {
+            $.ajax({
+                url: '/QLHS/public/ghi-hs',
+                type: 'POST',
+                data: {
+                    hocsinh: {
+                        malophoc: $('[name=Lop]').children('option:selected').attr("id"),
+                        tenhocsinh: $('[name=tenhocsinh]').val(),
+                        ngaysinh: $('[name=ngaysinh]').val(),
+                        gioitinh: $('[name=gioitinh]').val(),
+                        trangthaihocsinh: $('[name=trangthai]').val(),
+                        dantoc: $('[name=dantoc]').val(),
+                        quoctich: $('[name=quoctich]').val(),
+                        tinh: $('[name=tinh]').val(),
+                        huyen: $('[name=huyen]').val(),
+                        xa: $('[name=xa]').val(),
+                        noisinh: $('[name=noisinh]').val(),
+                        choohientai: $('[name=choohientai]').val(),
+                        sodt: $('[name=sdt]').val(),
+                        khuvuc: $('[name=khuvuc]').val(),
+                        loaikhuyettat: $('[name=loaikhuyettat]').val(),
+                        doituongchinhsach: $('[name=dtcs]').val(),
+                        mienhocphi: $('[name=mienhocphi]')[0].checked,
+                        giamhocphi: $('[name=giamhocphi]')[0].checked,
+                        doivien: $('[name=doivien]')[0].checked,
+                        luubannamtruoc: $('[name=luubannamtruoc]')[0].checked,
+                        hotencha: $('[name=hotencha]').val(),
+                        nghenghiepcha: $('[name=nghenghiepcha]').val(),
+                        namsinhcha: $('[name=namsinhcha]').val(),
+                        hotenme: $('[name=hotenme]').val(),
+                        nghenghiepme: $('[name=nghenghiepme]').val(),
+                        namsinhme: $('[name=namsinhme]').val(),
+                        hotenngh: $('[name=hotenngh]').val(),
+                        nghenghiepngh: $('[name=nghenghiepngh]').val(),
+                        namsinhngh: $('[name=namsinhngh]').val()
+                    }
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.ngaysinh)
+                    {
+                        $("#noteNgaysinh").css({display: "block"});
+                    }
+                    if(msg.tenhocsinh)
+                    {
+                        $("#noteName").css({display: "block"});
+                    }
+                    if(msg == "Ghi hồ sơ học sinh thành công!")
+                    {
                             //location.reload();
                             $("#ghihs_thanhcong").css({display: "block"});
                             $("#ghihs_thanhcong").children().append(msg).show();
@@ -181,72 +241,74 @@ $(function () {
                         // do something here because of error
                     }
                 })
-            }
-            else if (flag == 0) {
-                $.ajax({
-                    url: '/QLHS/public/ghi-hs',
-                    type: 'PUT',
-                    data: {
-                        hocsinh: {
-                            mahocsinh: mahocsinh_choose,
-                            tenhocsinh: $('[name=tenhocsinh]').val(),
-                            ngaysinh: $('[name=ngaysinh]').val(),
-                            gioitinh: $('[name=gioitinh]').val(),
-                            trangthaihocsinh: $('[name=trangthai]').val(),
-                            dantoc: $('[name=dantoc]').val(),
-                            quoctich: $('[name=quoctich]').val(),
-                            tinh: $('[name=tinh]').val(),
-                            huyen: $('[name=huyen]').val(),
-                            xa: $('[name=xa]').val(),
-                            noisinh: $('[name=noisinh]').val(),
-                            choohientai: $('[name=choohientai]').val(),
-                            sodt: $('[name=sdt]').val(),
-                            khuvuc: $('[name=khuvuc]').val(),
-                            loaikhuyettat: $('[name=loaikhuyettat]').val(),
-                            doituongchinhsach: $('[name=dtcs]').val(),
-                            mienhocphi: $('[name=mienhocphi]')[0].checked,
-                            giamhocphi: $('[name=giamhocphi]')[0].checked,
-                            doivien: $('[name=doivien]')[0].checked,
-                            luubannamtruoc: $('[name=luubannamtruoc]')[0].checked,
-                            hotencha: $('[name=hotencha]').val(),
-                            nghenghiepcha: $('[name=nghenghiepcha]').val(),
-                            namsinhcha: $('[name=namsinhcha]').val(),
-                            hotenme: $('[name=hotenme]').val(),
-                            nghenghiepme: $('[name=nghenghiepme]').val(),
-                            namsinhme: $('[name=namsinhme]').val(),
-                            hotenngh: $('[name=hotenngh]').val(),
-                            nghenghiepngh: $('[name=nghenghiepngh]').val(),
-                            namsinhngh: $('[name=namsinhngh]').val()
-                        }
-                    },
-                    success: function (msg) {
-                        console.log(msg);
-                        if(msg.ngaysinh)
-                        {
-                            $("#noteNgaysinh").css({display: "block"});
-                        }
-                        if(msg.tenhocsinh)
-                        {
-                            $("#noteName").css({display: "block"});
-                        }
-                        if(msg == "Sửa hồ sơ học sinh thành công!")
-                        {
-                            $("#ghihs_thanhcong").css({display: "block"});
-                            $("#ghihs_thanhcong").children().append(msg).show();
-                            setTimeout(function(){location.reload()}, 2000);
-                        }
-                    },
-                    error: function (xhr) {
+        }
+        else if (flag == 0) {
+            $.ajax({
+                url: '/QLHS/public/ghi-hs',
+                type: 'PUT',
+                data: {
+                    hocsinh: {
+                        mahocsinh: mahocsinh_choose,
+                        tenhocsinh: $('[name=tenhocsinh]').val(),
+                        ngaysinh: $('[name=ngaysinh]').val(),
+                        gioitinh: $('[name=gioitinh]').val(),
+                        trangthaihocsinh: $('[name=trangthai]').val(),
+                        dantoc: $('[name=dantoc]').val(),
+                        quoctich: $('[name=quoctich]').val(),
+                        tinh: $('[name=tinh]').val(),
+                        huyen: $('[name=huyen]').val(),
+                        xa: $('[name=xa]').val(),
+                        noisinh: $('[name=noisinh]').val(),
+                        choohientai: $('[name=choohientai]').val(),
+                        sodt: $('[name=sdt]').val(),
+                        khuvuc: $('[name=khuvuc]').val(),
+                        loaikhuyettat: $('[name=loaikhuyettat]').val(),
+                        doituongchinhsach: $('[name=dtcs]').val(),
+                        mienhocphi: $('[name=mienhocphi]')[0].checked,
+                        giamhocphi: $('[name=giamhocphi]')[0].checked,
+                        doivien: $('[name=doivien]')[0].checked,
+                        luubannamtruoc: $('[name=luubannamtruoc]')[0].checked,
+                        hotencha: $('[name=hotencha]').val(),
+                        nghenghiepcha: $('[name=nghenghiepcha]').val(),
+                        namsinhcha: $('[name=namsinhcha]').val(),
+                        hotenme: $('[name=hotenme]').val(),
+                        nghenghiepme: $('[name=nghenghiepme]').val(),
+                        namsinhme: $('[name=namsinhme]').val(),
+                        hotenngh: $('[name=hotenngh]').val(),
+                        nghenghiepngh: $('[name=nghenghiepngh]').val(),
+                        namsinhngh: $('[name=namsinhngh]').val()
+                    }
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.ngaysinh)
+                    {
+                        $("#noteNgaysinh").css({display: "block"});
+                    }
+                    if(msg.tenhocsinh)
+                    {
+                        $("#noteName").css({display: "block"});
+                    }
+                    if(msg == "Sửa hồ sơ học sinh thành công!")
+                    {
+                        $("#ghihs_thanhcong").css({display: "block"});
+                        $("#ghihs_thanhcong").children().append(msg).show();
+                        setTimeout(function(){location.reload()}, 2000);
+                    }
+                },
+                error: function (xhr) {
                         console.log(xhr.responseText); // this line will save you tons of hours while debugging
                         // do something here because of error
                     }
                 })
-            }
+        }
         //}
     });
 
 $('[name=btnEditHS]').click(function() {
     flag = 0;
+
+
         //khoi
         $('[name=khoi]').val($('[name=Khoi]').val());
         $('[name=lop]').val($('[name=Lop]').val());
@@ -262,14 +324,14 @@ $('[name=btnEditHS]').click(function() {
         $('[name=dantoc]').val(row.cells[8].innerText);
         $('[name=quoctich]').val(row.cells[9].innerText);
         $('[name=tinh]').val(row.cells[10].innerText);
-        $('[name=huyen]').val(row.cells[11].innerText);
+        
         $('[name=xa]').val(row.cells[12].innerText);
         $('[name=noisinh]').val(row.cells[13].innerText);
         $('[name=choohientai]').val(row.cells[14].innerText);
         $('[name=sdt]').val(row.cells[15].innerText);
         $('[name=khuvuc]').val(row.cells[16].innerText);
-        $('[name=loaikhuyettat]').val(row.cells[17].innerText);
-        $('[name=dtcs]').val(row.cells[18].innerText);               
+        $('[name=loaikhuyettat]').val(row.cells[17].innerText == '' ? 'Không' : row.cells[17].innerText);
+        $('[name=dtcs]').val(row.cells[18].innerText == '' ? 'Không' : row.cells[18].innerText);               
         $('[name=mienhocphi]').prop('checked', row.cells[19].innerText == 'x'? true:false);
         $('[name=giamhocphi]').prop('checked', row.cells[20].innerText == 'x'? true:false);
         $('[name=doivien]').prop('checked', row.cells[21].innerText == 'x'? true:false);
@@ -283,5 +345,25 @@ $('[name=btnEditHS]').click(function() {
         $('[name=hotenngh]').val(row.cells[29].innerText);
         $('[name=nghenghiepngh]').val(row.cells[30].innerText);
         $('[name=namsinhngh]').val(row.cells[31].innerText);
+
+        $('[name=huyen]').find('option').remove();
+        //Đưa Huyện mặc định của Tp Hà hội vào trước
+        let currentTinh = $('[name=tinh]').val();
+        //alert(`tỉnh = ${currentTinh}`);
+        for(let i = 5; i < HuyenData.size; i++) {
+            if(HuyenData[i].F == currentTinh) {
+            // thêm option
+            $('[name=huyen]').append(new Option(HuyenData[i].C, HuyenData[i].C));
+            }
+        }
+        $('[name=huyen]').val(row.cells[11].innerText);
     });
+
+$('[name=btnXuatexcel]').click(function(e){
+   $("#table_hocsinh").table2excel({
+    exclude: ".noExcel",
+    name: "DanhSach",
+            filename: `Danh sách học sinh lớp ${$('[name=Lop] option:selected').val()}.xls`, // do include extension
+        });
+})
 });

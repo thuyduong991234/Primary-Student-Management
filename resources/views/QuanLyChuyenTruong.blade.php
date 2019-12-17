@@ -42,13 +42,13 @@
           <div style="height: 50px;">
             <div class="row">
               <div class="col" style="float: left;">
-                <h5 style="color: black">4.2.2 Quản lý chuyển đi, chuyển đến, thôi học</h5>
+                <h5>4.2.2 Quản lý chuyển đi, chuyển đến, thôi học</h5>
               </div>
 
               <div style="float: right;">
                 <div class="row justify-content-end">
                   <div class="col-md-auto" style="align-items: center; display: flex;">
-                    <div><span style="color: black; margin-right: 15px">Khối:</span></div>
+                    <div><span style="color: #293c74; font-weight: bold; margin-right: 15px">Khối:</span></div>
                     <select class="form-control" style="width: 10rem; float: right;" name="Khoi">
                       @for ($i = 1; $i <= 5; $i++)
                       @if($khoi)
@@ -66,7 +66,7 @@
                   </div>
 
                   <div class="col-md-auto" style="align-items: center; display: flex;">
-                    <div><span style="color: black; margin-right: 15px">Lớp:</span></div>
+                    <div><span style="color: #293c74; font-weight: bold; margin-right: 15px">Lớp:</span></div>
                     <select class="form-control" style="width: 10rem" name="Lop">
                       @foreach($data_lophoc as $LH)
                       @if($lop)
@@ -82,7 +82,7 @@
                     </select>
                   </div>
                   <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-                    <span style="color: black">Trạng thái:</span>
+                    <span style="color: #293c74; font-weight: bold;">Trạng thái:</span>
                     <select class="form-control" style="width: auto; margin-left: 5px" name="Trangthai">
                       @if($trangthai == 'Chuyển đến kỳ 1')
                       <option selected>Chuyển đến kỳ 1</option>
@@ -143,7 +143,7 @@
                     </select>
                   </div>
                   <div class="col-md-auto" style="margin-right: 10px;">
-                    <button type="button" name="btnXuatExcel" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: black; float: right;">Xuất Excel</button>
+                    <button type="button" name="btnXuatexcel" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: black; float: right;">Xuất Excel</button>
                   </div>
                 </div>
 
@@ -151,15 +151,14 @@
             </div>
           </div>
         </div>
-      </div>
-      
+
       <!--End area button-->
       <script type="text/javascript">
       </script>
       <!--table hồ sơ giáo viên-->
       <div class="table-responsive">
         <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_chuyenlophoc">
-          <thead style="background-color: black; color: white;">
+          <thead style="background-color: #293c74; color: white;">
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Tên lớp học</th>
@@ -191,6 +190,8 @@
 </div>
 <!-- /.container-fluid -->
 </div>
+      </div>
+      
 <!-- End of Main Content -->
 <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="xuatexcel_thanhcong">
   <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
@@ -207,28 +208,12 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

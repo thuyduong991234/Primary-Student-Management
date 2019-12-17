@@ -11,85 +11,96 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 
 Route::get('DangNhap',function(){
 	return view('DangNhap');
-});
+})->name('dangnhap');
 
 
-Route::get('log','AuthController@XinChao');
+Route::get('/', function () {
+    return view('welcome');
+})->middleware('login');
+Route::get('hshs','AuthController@getDanhSachHocSinh')->middleware('login');
+Route::delete('xoa-hs','AuthController@getXoaHS')->name('xoahocsinh')->middleware('login');
+Route::post('ghi-hs','AuthController@ghiHS')->name('ghihocsinh')->middleware('login');
+Route::put('ghi-hs','AuthController@suaHS')->name('suahocsinh')->middleware('login');
 
-Route::get('hshs','AuthController@getDanhSachHocSinh');
-Route::delete('xoa-hs','AuthController@getXoaHS')->name('xoahocsinh');
-Route::post('ghi-hs','AuthController@ghiHS')->name('ghihocsinh');
-Route::put('ghi-hs','AuthController@suaHS')->name('suahocsinh');
+Route::get('hsgv','AuthController@getDanhSachGiaoVien')->middleware('login');
+Route::delete('xoa-gv','AuthController@getXoaGV')->name('xoagiaovien')->middleware('login', 'phanquyen');
+Route::post('ghi-gv','AuthController@ghiGV')->name('ghigiaovien')->middleware('login', 'phanquyen');
+Route::put('ghi-gv','AuthController@suaGV')->name('suagiaovien')->middleware('login', 'phanquyen');
+Route::put('capnhattaikhoan','AuthController@capnhatTaiKhoan')->middleware('login', 'phanquyen');
+Route::get('xuatexcelGV','AuthController@GiaoVienEx')->middleware('login');
 
-Route::get('hsgv','AuthController@getDanhSachGiaoVien');
-Route::delete('xoa-gv','AuthController@getXoaGV')->name('xoagiaovien');
-Route::post('ghi-gv','AuthController@ghiGV')->name('ghigiaovien');
-Route::put('ghi-gv','AuthController@suaGV')->name('suagiaovien');
+Route::get('qllh','AuthController@getDanhSachLopHoc')->middleware('login', 'phanquyen');
+Route::delete('xoa-lh','AuthController@getXoaLH')->name('xoalophoc')->middleware('login', 'phanquyen');
+Route::post('ghi-lh','AuthController@ghiLH')->name('ghilophoc')->middleware('login', 'phanquyen');
+Route::put('ghi-lh','AuthController@suaLH')->name('sualophoc')->middleware('login', 'phanquyen');
+Route::get('xuatexcelLH','AuthController@LopHocEx')->middleware('login', 'phanquyen');
 
-Route::get('qllh','AuthController@getDanhSachLopHoc');
-Route::delete('xoa-lh','AuthController@getXoaLH')->name('xoalophoc');
-Route::post('ghi-lh','AuthController@ghiLH')->name('ghilophoc');
-Route::put('ghi-lh','AuthController@suaLH')->name('sualophoc');
+Route::get('xmlh','AuthController@getDuLieuMonHoc')->middleware('login', 'phanquyen');
+Route::post('capnhat-xeplh','AuthController@capnhatXepMonHoc')->name('xepmonhoc')->middleware('login', 'phanquyen');
 
-Route::get('xmlh','AuthController@getDuLieuMonHoc');
-Route::post('capnhat-xeplh','AuthController@capnhatXepMonHoc')->name('xepmonhoc');
+Route::get('chuyenlop','AuthController@getChuyenLop')->middleware('login');
+Route::put('capnhat-chuyenlop','AuthController@CapNhatChuyenLop')->middleware('login');
 
-Route::get('chuyenlop','AuthController@getChuyenLop');
-Route::put('capnhat-chuyenlop','AuthController@CapNhatChuyenLop');
+Route::get('qlchuyentruong','AuthController@getDanhSachChuyenTruong')->middleware('login');
 
-Route::get('qlchuyentruong','AuthController@getDanhSachChuyenTruong');
-
-Route::get('kqht','AuthController@getKetQuaHocTap');
-Route::put('capnhat-kqht','AuthController@capnhatKetQuaHocTap');
+Route::get('kqht','AuthController@getKetQuaHocTap')->middleware('login');
+Route::put('capnhat-kqht','AuthController@capnhatKetQuaHocTap')->middleware('login');
+Route::get('xuatexcelKQHT', 'AuthController@KetQuaHocTapEx')->middleware('login');
 
 //khenthuong
-Route::get('ktdx','AuthController@getKTQX');
+Route::get('ktdx','AuthController@getKTQX')->middleware('login');
+Route::post('ghi-ktdx','AuthController@ghiKTDX')->middleware('login');
+Route::put('capnhat-ktdx','AuthController@suaKTDX')->middleware('login');
+Route::delete('xoa-ktdx','AuthController@getXoaKTDX')->middleware('login');
 
-Route::get('kttn','AuthController@getKTTN');
+
+Route::get('kttn','AuthController@getKTTN')->middleware('login');
+Route::put('capnhat-kttn','AuthController@capnhatKTTN')->middleware('login');
 
 //ql hoan thanh ct tieu hoc
-Route::get('qlhtctth','AuthController@getHoanThanhCTTieuHoc');
+Route::get('qlhtctth','AuthController@getHoanThanhCTTieuHoc')->middleware('login');
+Route::put('capnhatqlhtctth','AuthController@capnhatHoanThanhCTTieuHoc')->middleware('login');
 
-Route::get('chuyenhoso','AuthController@getChuyenHoSo');
+Route::get('chuyenhoso','AuthController@getChuyenHoSo')->middleware('login', 'phanquyen');
+Route::post('saocheplophoc','AuthController@SaoChepLopHoc')->middleware('login', 'phanquyen');
+Route::post('saochephocsinh','AuthController@SaoChepHocSinh')->middleware('login', 'phanquyen');
+
 
 //thongkebaocao
-Route::get('tkmucdatduoc','AuthController@ThongKeMDD');
-Route::get('tknlpc','AuthController@ThongKeNLPC');
+Route::get('tkdiemmonhoc','AuthController@ThongKeDiemMH')->middleware('login');
+Route::get('tkmucdatduoc','AuthController@ThongKeMDD')->middleware('login');
+Route::get('tknlpc','AuthController@ThongKeNLPC')->middleware('login');
+Route::get('tkktll','AuthController@ThongKeKTLL')->middleware('login');
+Route::get('xuatexcelKTLL', 'AuthController@ThongKeKTLLEx')->middleware('login');
+Route::get('xuatexcelTKDMH', 'AuthController@ThongKeDiemMonHocEx')->middleware('login');
+Route::get('xuatexcelTKMDD', 'AuthController@ThongKeMucDatDuocEx')->middleware('login');
+Route::get('xuatexcelTKNLPC', 'AuthController@ThongKeNLPCEx')->middleware('login');
 
+//import
+Route::post('nhapexcelHSHS', 'AuthController@importHoSoHocSinh')->name('nhapexcelHSHS')->middleware('login');
+Route::post('nhapexcelKQHT', 'AuthController@importKQHT')->name('nhapexcelKQHT')->middleware('login');
 
 
 Route::post('login','AuthController@login')->name('login');
+Route::get('logout','AuthController@logout')->name('logout')->middleware('login');
 
-Route::get('qp/get', function()
-{
-	$data = App\HocSinh::where('mahocsinh','HS001')->get();
 
-	var_dump($data);
-});
 
 Route::get('NamHoc', function()
 {
 	return view('NamHoc');
-});
-
-Route::get('HoSoHocSinh', function()
-{
-	return view('HoSoHocSinh');
-});
+})->middleware('login');
 
 
 
-Route::post('ChonNamHoc','AuthController@ChonNamHoc')->name('ChonNamHoc');
 
-Route::get('model/monhoc/save', function(){
+
+Route::post('ChonNamHoc','AuthController@ChonNamHoc')->name('ChonNamHoc')->middleware('login');
+
+/*Route::get('model/monhoc/save', function(){
 	$monhoc = new App\MonHoc();
 	
 
@@ -102,3 +113,18 @@ Route::get('lienket', function()
 
 	var_dump($data[0]->GiaoVien->toArray());
 });
+Route::get('HoSoHocSinh', function()
+{
+	return view('HoSoHocSinh');
+});
+
+Route::get('qp/get', function()
+{
+	$data = App\HocSinh::where('mahocsinh','HS001')->get();
+
+	var_dump($data);
+});
+*/
+
+//Test read Excel
+Route::get('/readExcel','AuthController@readBieuMau');

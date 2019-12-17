@@ -60,7 +60,14 @@ class HocSinh extends Model
     public function RenderMaHS()
     {
         $hocsinhcuoi = HocSinh::orderBy('mahocsinh', 'desc')->first();
-        $matieptheo = ((int)($hocsinhcuoi->mahocsinh) + 1)."";
+        if($hocsinhcuoi)
+        {
+            $matieptheo = ((int)($hocsinhcuoi->mahocsinh) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";
+        }
         return $matieptheo;
     }
     

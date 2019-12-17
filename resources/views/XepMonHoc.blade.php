@@ -42,13 +42,13 @@
           <div style="height: 50px;">
             <div class="row">
               <div class="col" style="float: left;">
-                <h5 style="color: black">3.2 Xếp môn học cho lớp</h5>
+                <h5>3.2 Xếp môn học cho lớp</h5>
               </div>
 
               <div class = "col" style="float: right;">
                 <div class="row justify-content-end">
                     <div class="col-md-auto" style="align-items: center; display: flex;">
-                    <div><span style="color: black; margin-right: 15px">Khối:</span></div>
+                    <div><span style="color: #293c74; font-weight: bold; margin-right: 15px">Khối:</span></div>
                     <select class="form-control" style="width: 10rem; float: right;" name="Khoi_choose">
                       @for ($i = 1; $i <= 5; $i++)
                         @if($khoi)
@@ -66,7 +66,7 @@
                   </div>
                   
                   <div class="col-2" style="margin-right: 10px;">
-                    <button type="button" name="btnCapNhat" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: black; float: right;">Cập nhật</button>
+                    <button type="button" name="btnCapNhat" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style=" float: right;">Cập nhật</button>
                   </div>
 
 
@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-      </div>
+
       
       <!--End area button-->
       <script type="text/javascript">
@@ -86,7 +86,7 @@
       <!--table hồ sơ giáo viên-->
       <div class="table-responsive">
         <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_xepmonhoc">
-          <thead style="background-color: black; color: white;">
+          <thead style="background-color: #293c74; color: white;">
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Tên lớp</th>
@@ -121,6 +121,7 @@
   <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
+      </div>
 <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="capnhat_thanhcong">
               <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
                 <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
@@ -136,24 +137,6 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

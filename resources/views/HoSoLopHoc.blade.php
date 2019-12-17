@@ -42,11 +42,11 @@
           <!--Start area button-->
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black">3.1 Quản lý lớp học</h5>
+              <h5>3.1 Quản lý lớp học</h5>
             </div>
             <div style="float: right;">
               <!-- Large modal -->
-              <button type="button" name="modalThemLopHoc" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg" style="background-color: black">Thêm mới</button>
+              <button type="button" name="modalThemLopHoc" class="btn btn-dark" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm mới</button>
 
               <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -111,7 +111,6 @@
 
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" name="btnGhiLopHoc">Ghi</button>
-                  <button type="button" class="btn btn-primary">Ghi và thêm</button>
                 </div>
               </div>
             </div>
@@ -121,15 +120,14 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-dark" style="background-color: black">Thêm với Excel</button>
-          <button type="button" class="btn btn-dark" name="btnXoa" style="background-color: black">Xóa lớp học</button>
-          <button type="button" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
+          <button type="button" class="btn btn-dark" name="btnXoa" data-toggle="modal" data-target=".xoa-modal">Xóa lớp học</button>
+          <button type="button" class="btn btn-dark" name="btnXuatexcel">Xuất Excel</button>
         </div>
       </div>
       <div class="row" style="margin-bottom: 10px">
-        <div class="col-md-auto" style="margin-right: 10px">
-          <span style="color: black">Khối:</span>
-          <select style="width: 10rem" name="Khoi">
+        <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
+          <span style="color: #293c74; font-weight: bold; margin-right: 5px" >Khối:</span>
+          <select style="width: 10rem" name="Khoi" class="form-control">
             <option selected>1</option>
             <option>2</option>
             <option>3</option>
@@ -143,7 +141,7 @@
       <!--table hồ sơ giáo viên-->
       <div class="table-responsive">
         <table class="table table-bordered table-striped" style="white-space: nowrap;" id="table_lophoc">
-          <thead style="background-color: black; color: white;">
+          <thead style="background-color: #293c74; color: white;">
             <tr>
               <th scope="col">STT</th>
               <th scope="col"><input type="checkbox" name="checkbox_all" style="width: 20px; height: 20px;"></th>
@@ -162,7 +160,7 @@
                 <input type="checkbox" name = "checkbox_one" style="width: 20px; height: 20px;">
               </td>
               <td align="center">
-                <i class="fas fa-user-edit" name = "btnEditLH" data-toggle="modal" data-target=".bd-example-modal-lg"></i>
+                <i class="fas fa-user-edit" style="color: #293c74" name = "btnEditLH" data-toggle="modal" data-target=".bd-example-modal-lg"></i>
               </td>
               <td>{{$LH -> malophoc}}</td>
               <td>{{$LH -> tenlophoc}}</td>
@@ -183,11 +181,7 @@
 
 </div>
 <!-- End of Content Wrapper -->
-<div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none" id="xoalh_thanhcong">
-  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
-    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
-  </div>
-</div>
+
 </div>
 <!-- End of Page Wrapper -->
 
@@ -196,23 +190,28 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Xoa Modal-->
+<div class="modal fade xoa-modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-body">Bạn có chắc muốn xóa không?</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+        <a class="btn btn-primary" name="btnXacNhanXoa">Xóa</a>
       </div>
     </div>
   </div>
+  <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none" id="xoalh_thanhcong">
+  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
+  </div>
+</div>
 </div>
 
 <!-- Bootstrap core JavaScript-->

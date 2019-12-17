@@ -18,7 +18,14 @@ class GiaoVien extends Model
     public function RenderMaGV()
     {
         $giaoviencuoi = GiaoVien::orderBy('magv', 'desc')->first();
-        $matieptheo = ((int)($giaoviencuoi->magv) + 1)."";
+        if($giaoviencuoi)
+        {
+            $matieptheo = ((int)($giaoviencuoi->magv) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";
+        }
         return $matieptheo;
     }
 }

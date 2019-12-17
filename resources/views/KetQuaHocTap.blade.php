@@ -33,7 +33,7 @@
       <div id="content">
 
         <!-- Topbar -->
-         @include('Templates.Header')
+        @include('Templates.Header')
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -41,17 +41,55 @@
           <!--Start area button-->
           <div style="height: 50px;">
             <div style="float: left;">
-              <h5 style="color: black">4.3 Nhập kết quả học tập học sinh</h5>
+              <h5>4.3 Nhập kết quả học tập học sinh</h5>
             </div>
 
             <div style="float: right;">
-             <button type="button" name="btnCapNhat" class="btn btn-dark" style="background-color: black;">Cập nhật</button>
-             <button type="button" name="btnXuatExcel" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
-           </div>
-         </div>
-         <div class="row justify-content-end" style="float: left; margin-bottom: 10px">
+              <button type="button" name="modalThemVoiExcel" class="btn btn-dark" data-toggle="modal" data-target=".them-excel" style="background-color: black">Thêm với Excel</button>
+
+
+
+              <div class="modal fade them-excel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <form action="{{route('nhapexcelKQHT')}}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                     <div class="modal-header">
+                      <h5 class="modal-title" id="Title">Cập nhật kết quả học tập với Excel</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+
+                    <!--modal body -->
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="myInput" name = "ThemEx" aria-describedby="inputGroupFileAddon01">
+                          <label class="custom-file-label" for="myInput">Chọn file</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" name="btnUpload">Tải lên</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="ghihs_thanhcong">
+                  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+                    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <button type="button" name="btnCapNhat" class="btn btn-dark" style="background-color: black;">Cập nhật</button>
+            <button type="button" name="btnXuatexcel" class="btn btn-dark" style="background-color: black">Xuất Excel</button>
+          </div>
+        </div>
+        <div class="row justify-content-end" style="float: left; margin-bottom: 10px">
           <div class="col-md-auto" style="align-items: center; display: flex;">
-            <div><span style="color: black; margin-right: 15px">Khối:</span></div>
+            <div><span style="color: #293c74; font-weight: bold; margin-right: 15px">Khối:</span></div>
             <select class="form-control" style="width: 10rem; float: right;" name="Khoi">
               @for ($i = 1; $i <= 5; $i++)
               @if($khoi)
@@ -69,7 +107,7 @@
           </div>
 
           <div class="col-md-auto" style="align-items: center; display: flex;">
-            <div><span style="color: black; margin-right: 15px">Lớp:</span></div>
+            <div><span style="color: #293c74; font-weight: bold; margin-right: 15px">Lớp:</span></div>
             <select class="form-control" style="width: 10rem" name="Lop">
               @foreach($data_lophoc as $LH)
               @if($lop)
@@ -85,7 +123,7 @@
             </select>
           </div>
           <div class="col-md-auto" style="margin-right: 10px; display: flex; align-items: center">
-            <span style="color: black">Thời điểm đánh giá:</span>
+            <span style="color: #293c74; font-weight: bold;">Thời điểm đánh giá:</span>
             <select class="form-control" style="width: auto; margin-left: 5px" name="Thoidiemdanhgia">
               @if($hocky == 'Học kỳ I')
               @if($thoidiemdanhgia == 'Giữa kỳ 1')
@@ -99,7 +137,7 @@
               <option>Cuối kỳ 1</option>
               @endif
               @elseif($hocky == 'Học kỳ II')
-               @if($thoidiemdanhgia == 'Giữa kỳ 2')
+              @if($thoidiemdanhgia == 'Giữa kỳ 2')
               <option selected>Giữa kỳ 2</option>
               @else
               <option>Giữa kỳ 2</option>
@@ -114,30 +152,30 @@
           </div>
         </div>
       </div>
-    </div>
+
 
     <!--End area button-->
     <script type="text/javascript">
     </script>
     <!--table hồ sơ giáo viên-->
-     @php
-     $count = 0;
-     @endphp
-     @foreach($listmonhoc as $MH)
-            @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
-            @php
-              $count = $count+2;
-            @endphp 
-            @else
-            @php
-              $count = $count+1;
-            @endphp 
-            @endif
-            @endforeach
-    @if($khoi >=4 || $thoidiemdanhgia == 'Cuối kỳ 1' || $thoidiemdanhgia == 'Cuối năm học')
+    @php
+    $count = 0;
+    @endphp
+    @foreach($listmonhoc as $MH)
+    @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+    @php
+    $count = $count+2;
+    @endphp 
+    @else
+    @php
+    $count = $count+1;
+    @endphp 
+    @endif
+    @endforeach
+    @if($thoidiemdanhgia == 'Cuối năm học')
     <div class="table-responsive">
       <table class="table table-bordered table-striped" id="table_ketquahoctap">
-        <thead style="background-color: black; color: white;">
+        <thead style="background-color: #293c74; color: white;">
           <tr>
             <th rowspan="3">STT</th>
             <th rowspan="3">Họ và tên</th>
@@ -147,6 +185,10 @@
             <th colspan="3">Năng lực</th>
             <th colspan="4">Phẩm chất</th>
             <th rowspan="3">Ghi chú</th>
+            <th rowspan="3">Lên lớp</th>
+            <th rowspan="3">Hoàn thành chương trình lớp học</th>
+            <th rowspan="3">Khen thưởng</th>
+            
           </tr>
           <tr>
             @foreach($listmonhoc as $MH)
@@ -179,34 +221,34 @@
           @foreach($data_hocsinh as $HS)
           <tr>
             <th scope="row">{{$loop->iteration}}</th>
-            <td scope="row" style="white-space: nowrap;">{{$HS->tenhocsinh}}</td>
+            <td scope="row" style="white-space: nowrap;" mahocsinh="$HS->mahocsinh">{{$HS->tenhocsinh}}</td>
             <td scope="row" style="white-space: nowrap;">{{$HS->ngaysinh}}</td>
             <td scope="row">{{$HS->gioitinh}}</td>
-           
+
             @foreach($listmonhoc as $MH)
-             @php
-              $flag = true;
-              @endphp
+            @php
+            $flag = true;
+            @endphp
             @foreach($data_kqht as $KQHT)
             @if($KQHT->mamonhoc == $MH->mamonhoc && $KQHT->mahocsinh == $HS->mahocsinh)
-             @php
-              $flag = false;
+            @php
+            $flag = false;
             @endphp
-              @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true">{{$KQHT->diemkt}}</td>
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
-              @else
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
-              @endif
+            @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true">{{$KQHT->diemkt}}</td>
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
+            @else
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
+            @endif
             @endif
             @endforeach
             @if($flag == true)
             @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true">{{$KQHT->diemkt}}</td>
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
-              @else
-              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
-              @endif
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true"></td>
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+            @else
+            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+            @endif
             @endif
             @endforeach  
             
@@ -215,12 +257,12 @@
 
             @if(count($data_kqnlpc)!= 0)
             @php
-              $flag = true;
-             @endphp
+            $flag = true;
+            @endphp
             @foreach($data_kqnlpc as $KQNLPC)
             @if($KQNLPC->mahocsinh == $HS->mahocsinh)
             @php
-              $flag = false;
+            $flag = false;
             @endphp 
             @if($KQNLPC->tendanhgia == 'Tự phục vụ, tự quản' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
@@ -230,200 +272,349 @@
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
             @elseif($KQNLPC->tendanhgia == 'Chăm học, chăm làm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Tự tin, trách nhiệm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+            @elseif($KQNLPC->tendanhgia == 'Tự tin, trách nhiệm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Trung thực, kỉ luật' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+            @elseif($KQNLPC->tendanhgia == 'Trung thực, kỉ luật' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Đoàn kết, yêu thương' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-            @elseif($KQNLPC->tendanhgia == 'Ghi chú' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}
-            @endif
-            @endif
-            @endforeach
-            @if($flag == true)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            @endif
-            @else
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            @endif
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-    @else
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped" id="table_ketquahoctap">
-        <thead style="background-color: black; color: white;">
-          <tr>
-            <th rowspan="2">STT</th>
-            <th rowspan="2">Họ và tên</th>
-            <th rowspan="2">Ngày sinh</th>
-            <th rowspan="2">Giới tính</th>
-            <th colspan="{{count($listmonhoc)}}">Môn học và hoạt động giáo dục</th>
-            <th colspan="3">Năng lực</th>
-            <th colspan="4">Phẩm chất</th>
-            <th rowspan="2">Ghi chú</th>
-          </tr>
-          <tr>
-            @foreach($listmonhoc as $MH)
-            <th>{{$MH->tenmonhoc}}</th>
-            @endforeach
-            <th>Tự phục vụ, tự quản</th>
-            <th>Hợp tác</th>
-            <th>Tự học và giải quyết vấn đề</th>
-            <th>Chăm học, chăm làm</th>
-            <th>Tự tin, trách nhiệm</th>
-            <th>Trung thực, kỉ luật</th>
-            <th>Đoàn kết, yêu thương</th>
-          </tr>
-        </thead>
-        <tbody style="background-color: white; color: black; overflow: auto;">
-          @foreach($data_hocsinh as $HS)
-          <tr>
-            <th scope="row">{{$loop->iteration}}</th>
-            <td scope="row" style="white-space: nowrap;">{{$HS->tenhocsinh}}</td>
-            <td scope="row" style="white-space: nowrap;">{{$HS->ngaysinh}}</td>
-            <td scope="row">{{$HS->gioitinh}}</td>
-            
-            @foreach($listmonhoc as $MH)
-            @php
-              $flag = true;
-            @endphp
-
-            @foreach($data_kqht as $KQHT)
-            @if($KQHT->mamonhoc == $MH->mamonhoc && $KQHT->mahocsinh == $HS->mahocsinh)
-            @php
-              $flag = false;
-            @endphp
-            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
-            @endif
-            @endforeach
-            @if($flag == true)
-            <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            @endif
-            @endforeach           
-           
-            <!--nlpc-->
-
-            @if(count($data_kqnlpc)!= 0)
-             @php
-              $flag = true;
-             @endphp
-            @foreach($data_kqnlpc as $KQNLPC)
-            @if($KQNLPC->mahocsinh == $HS->mahocsinh)
-            @php
-              $flag = false;
-            @endphp 
-            @if($KQNLPC->tendanhgia == 'Tự phục vụ, tự quản' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-            @elseif($KQNLPC->tendanhgia == 'Hợp tác' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-            @elseif($KQNLPC->tendanhgia == 'Tự học và giải quyết vấn đề' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-            @elseif($KQNLPC->tendanhgia == 'Chăm học, chăm làm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Tự tin, trách nhiệm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Trung thực, kỉ luật' && $KQNLPC->mahocsinh == $HS->mahocsinh)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
-             @elseif($KQNLPC->tendanhgia == 'Đoàn kết, yêu thương' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+            @elseif($KQNLPC->tendanhgia == 'Đoàn kết, yêu thương' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
             @elseif($KQNLPC->tendanhgia == 'Ghi chú' && $KQNLPC->mahocsinh == $HS->mahocsinh)
             <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}
-            @endif
-            @endif
+              @endif
+              @endif
+              @endforeach
+              @if($flag == true)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              @endif
+              @else
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              @endif
+              <td align="center">
+                @if($HS->lenlop == 1)
+                <input type="checkbox" name = "checkbox_one" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;" checked>
+                @else
+                <input type="checkbox" name = "checkbox_one" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;"> 
+                @endif
+              </td>
+              <td align="center">
+                @if($HS->hoanthanhctlh == 1)
+                <input type="checkbox" name = "checkbox_one1" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;" checked>
+                @else
+                <input type="checkbox" name = "checkbox_one1" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;"> 
+                @endif
+              </td>
+              <td align="center">
+                @if($HS->khenthuong == 1)
+                <input type="checkbox" name = "checkbox_one2" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;" checked>
+                @else
+                <input type="checkbox" name = "checkbox_one2" thongtin = "{{$HS->mahocsinh}}-{{$HS->mactlophoc}}" style="width: 20px; height: 20px;"> 
+                @endif
+              </td>
+            </tr>
             @endforeach
-            @if($flag == true)
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            @endif
-            @else
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
-            @endif
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-    @endif
-    <!--end table-->
+          </tbody>
+        </table>
+      </div>
+      @elseif($khoi >=4 || $thoidiemdanhgia == 'Cuối kỳ 1')
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="table_ketquahoctap">
+          <thead style="background-color: #293c74; color: white;">
+            <tr>
+              <th rowspan="3">STT</th>
+              <th rowspan="3">Họ và tên</th>
+              <th rowspan="3">Ngày sinh</th>
+              <th rowspan="3">Giới tính</th>
+              <th colspan="{{$count}}">Môn học và hoạt động giáo dục</th>
+              <th colspan="3">Năng lực</th>
+              <th colspan="4">Phẩm chất</th>
+              <th rowspan="3">Ghi chú</th>
+            </tr>
+            <tr>
+              @foreach($listmonhoc as $MH)
+              @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+              <th colspan="2">{{$MH->tenmonhoc}}</th>
+              @else
+              <th>{{$MH->tenmonhoc}}</th>
+              @endif
+              @endforeach
+              <th rowspan="2">Tự phục vụ, tự quản</th>
+              <th rowspan="2">Hợp tác</th>
+              <th rowspan="2">Tự học và giải quyết vấn đề</th>
+              <th rowspan="2">Chăm học, chăm làm</th>
+              <th rowspan="2">Tự tin, trách nhiệm</th>
+              <th rowspan="2">Trung thực, kỉ luật</th>
+              <th rowspan="2">Đoàn kết, yêu thương</th>
+            </tr>
+            <tr>
+              @foreach($listmonhoc as $MH)
+              @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+              <th>Điểm KTĐK</th>
+              <th>Mức đạt được</th>
+              @else
+              <th>Mức đạt được</th>
+              @endif
+              @endforeach
+            </tr>
+          </thead>
+          <tbody style="background-color: white; color: black; overflow: auto;">
+            @foreach($data_hocsinh as $HS)
+            <tr>
+              <th scope="row">{{$loop->iteration}}</th>
+              <td scope="row" style="white-space: nowrap;">{{$HS->tenhocsinh}}</td>
+              <td scope="row" style="white-space: nowrap;">{{$HS->ngaysinh}}</td>
+              <td scope="row">{{$HS->gioitinh}}</td>
 
+              @foreach($listmonhoc as $MH)
+              @php
+              $flag = true;
+              @endphp
+              @foreach($data_kqht as $KQHT)
+              @if($KQHT->mamonhoc == $MH->mamonhoc && $KQHT->mahocsinh == $HS->mahocsinh)
+              @php
+              $flag = false;
+              @endphp
+              @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true">{{$KQHT->diemkt}}</td>
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
+              @else
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
+              @endif
+              @endif
+              @endforeach
+              @if($flag == true)
+              @if($MH->tenmonhoc == 'Toán' || $MH->tenmonhoc == 'Tiếng Việt'|| $MH->tenmonhoc == 'Ngoại ngữ'|| $MH->tenmonhoc == 'Tin học'|| $MH->tenmonhoc == 'Tiếng dân tộc' || $MH->tenmonhoc == 'Khoa học'|| $MH->tenmonhoc == 'Lịch sử và Địa lí')
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-diemkt" scope="row" contenteditable="true"></td>
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              @else
+              <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+              @endif
+              @endif
+              @endforeach  
+
+
+              <!--nlpc khoi >=4-->
+
+              @if(count($data_kqnlpc)!= 0)
+              @php
+              $flag = true;
+              @endphp
+              @foreach($data_kqnlpc as $KQNLPC)
+              @if($KQNLPC->mahocsinh == $HS->mahocsinh)
+              @php
+              $flag = false;
+              @endphp 
+              @if($KQNLPC->tendanhgia == 'Tự phục vụ, tự quản' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Hợp tác' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Tự học và giải quyết vấn đề' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Chăm học, chăm làm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Tự tin, trách nhiệm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Trung thực, kỉ luật' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Đoàn kết, yêu thương' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+              @elseif($KQNLPC->tendanhgia == 'Ghi chú' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+              <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}
+                @endif
+                @endif
+                @endforeach
+                @if($flag == true)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                @endif
+                @else
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                @endif
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        @else
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped" id="table_ketquahoctap">
+            <thead style="background-color: #293c74; color: white;">
+              <tr>
+                <th rowspan="2">STT</th>
+                <th rowspan="2">Họ và tên</th>
+                <th rowspan="2">Ngày sinh</th>
+                <th rowspan="2">Giới tính</th>
+                <th colspan="{{count($listmonhoc)}}">Môn học và hoạt động giáo dục</th>
+                <th colspan="3">Năng lực</th>
+                <th colspan="4">Phẩm chất</th>
+                <th rowspan="2">Ghi chú</th>
+              </tr>
+              <tr>
+                @foreach($listmonhoc as $MH)
+                <th>{{$MH->tenmonhoc}}</th>
+                @endforeach
+                <th>Tự phục vụ, tự quản</th>
+                <th>Hợp tác</th>
+                <th>Tự học và giải quyết vấn đề</th>
+                <th>Chăm học, chăm làm</th>
+                <th>Tự tin, trách nhiệm</th>
+                <th>Trung thực, kỉ luật</th>
+                <th>Đoàn kết, yêu thương</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: white; color: black; overflow: auto;">
+              @foreach($data_hocsinh as $HS)
+              <tr>
+                <th scope="row">{{$loop->iteration}}</th>
+                <td scope="row" style="white-space: nowrap;">{{$HS->tenhocsinh}}</td>
+                <td scope="row" style="white-space: nowrap;">{{$HS->ngaysinh}}</td>
+                <td scope="row">{{$HS->gioitinh}}</td>
+
+                @foreach($listmonhoc as $MH)
+                @php
+                $flag = true;
+                @endphp
+
+                @foreach($data_kqht as $KQHT)
+                @if($KQHT->mamonhoc == $MH->mamonhoc && $KQHT->mahocsinh == $HS->mahocsinh)
+                @php
+                $flag = false;
+                @endphp
+                <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQHT->mucdatduoc}}</td>
+                @endif
+                @endforeach
+                @if($flag == true)
+                <td name="giatri" giatri="{{$HS->mahocsinh}}-{{$MH->mamonhoc}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                @endif
+                @endforeach           
+
+                <!--nlpc-->
+
+                @if(count($data_kqnlpc)!= 0)
+                @php
+                $flag = true;
+                @endphp
+                @foreach($data_kqnlpc as $KQNLPC)
+                @if($KQNLPC->mahocsinh == $HS->mahocsinh)
+                @php
+                $flag = false;
+                @endphp 
+                @if($KQNLPC->tendanhgia == 'Tự phục vụ, tự quản' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Hợp tác' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Tự học và giải quyết vấn đề' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Chăm học, chăm làm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Tự tin, trách nhiệm' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Trung thực, kỉ luật' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Đoàn kết, yêu thương' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}</td>
+                @elseif($KQNLPC->tendanhgia == 'Ghi chú' && $KQNLPC->mahocsinh == $HS->mahocsinh)
+                <td name="nlpc" giatri="{{$HS->mahocsinh}}-{{$KQNLPC->tendanhgia}}-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true">{{$KQNLPC->mucdatduoc}}
+                  @endif
+                  @endif
+                  @endforeach
+                  @if($flag == true)
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  @endif
+                  @else
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự phục vụ, tự quản-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Hợp tác-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự học và giải quyết vấn đề-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Chăm học, chăm làm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Tự tin, trách nhiệm-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Trung thực, kỉ luật-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Đoàn kết, yêu thương-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  <td name="nlpc" giatri="{{$HS->mahocsinh}}-Ghi chú-{{$HS->mactlophoc}}-mucdatduoc" scope="row" contenteditable="true"></td>
+                  @endif
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          @endif
+          <!--end table-->
+
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- End of Main Content -->
+          <div class="card bg-danger text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="xuatloi1">
+      <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+        <i class="fas fa-exclamation-circle fa-2x" style="color: white; margin-right: 5px"></i>
+        <span name = "textloi1"></span>
+      </div>
+    </div>
+    <div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="capnhat_thanhcong">
+      <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+        <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
+      </div>
+    </div>
   </div>
-</div>
-<!-- /.container-fluid -->
-</div>
-<!-- End of Main Content -->
-<div class="card bg-danger text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="xuatloi">
-  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
-    <i class="fas fa-exclamation-circle fa-2x" style="color: white; margin-right: 5px"></i>
-    <span name = "textloi"></span>
+  <!-- End of Content Wrapper -->
+  @if(session('Thành công'))
+  <div class="card bg-success text-white shadow" style="display: block; position: fixed; bottom: 10px; left: 10px; border: none" id="thanhcong">
+    <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+      <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>{{session('Thành công')}}
+    </div>
   </div>
-</div>
-<div class="card bg-success text-white shadow" style="display: none; position: fixed; bottom: 10px; left: 10px; border: none;" id="capnhat_thanhcong">
-  <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
-    <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>
+  @elseif (session('Thất bại'))
+  <div class="card bg-danger text-white shadow" style="display: block; position: fixed; bottom: 10px; left: 10px; border: none" id="thatbai">
+    <div class="card-body" style="align-items: center; display: flex; padding: 1rem">
+      <i class="fas fa-check-circle fa-2x" style="color: white; margin-right: 5px"></i>{{session('Thất bại')}}
+    </div>
   </div>
-</div>
-</div>
-<!-- End of Content Wrapper -->
+  @endif
 </div>
 <!-- End of Page Wrapper -->
-
+    </div>
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>
+<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->

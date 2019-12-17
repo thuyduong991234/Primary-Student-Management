@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>QUẢN LÝ HỌC SINH</title>
 
@@ -42,23 +43,44 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800"> <i class="fas fa-school fa-sm fa-fw mr-2 text-gray-400"></i>Trang chủ</h1>
+            <h5 class="h3 mb-0" style="color: #293c74"> <i style="color: #293c74" class="fas fa-school fa-sm fa-fw mr-2"></i>Trang chủ</h5>
           </div>
+
+           <!-- Collapsable Card Example -->
+           <div class="row">
+            <div class="col-lg-6">
+             <div class="card shadow md-6">
+                <!-- Card Header - Accordion -->
+                <a style="background-color: #293c74;" href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold" style="color: white">Danh sách các biểu mẫu</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample">
+                  <div class="card-body">
+                    <a href="https://drive.google.com/open?id=1u4NErCP05ryURrEOAfD2_H2ryobrPhUr">Biểu mẫu Hồ sơ học sinh</a>
+                    <br>
+                    <a href="https://drive.google.com/open?id=1u0U5ppPwtd4Tn6lnmVJ8i45jnsa_YFeM">Biểu mẫu Kết quả học tập - Giữa kỳ 1, 2 - Lớp 1,2,3</a>
+                    <br>
+                     <a href="https://drive.google.com/open?id=1Sm8ibzbT8m0AIEwGXMtUNL28I3DYUfC7">Biểu mẫu Kết quả học tập - Giữa kỳ 1, 2 - Lớp 4,5</a>
+                    <br>
+                    <a href="https://drive.google.com/open?id=1gMJbrEM1OGJx_5Uht9YmVQw0O7La9K93">Biểu mẫu Kết quả học tập - Cuối kỳ 1 - Lớp 1,2,3</a>
+                    <br>
+                    <a href="https://drive.google.com/open?id=1VDf-Vr8zf540QhEqHTIvnw43qu28mpl0">Biểu mẫu Kết quả học tập - Cuối kỳ 1 - Lớp 4,5</a>
+                     <br>
+                    <a href="https://drive.google.com/open?id=1tFk661fRs2DhUO3bJgTmrnYiNBzDMdEx">Biểu mẫu Kết quả học tập - Cuối năm học - Lớp 1,2,3</a>
+                     <br>
+                    <a href="https://drive.google.com/open?id=15vMIZ3RFzlajFGkUrv7RQXivc_Rdal3y">Biểu mẫu Kết quả học tập - Cuối năm học - Lớp 4,5</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+           </div>
+              
         </div>
         <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer" style="background-color: ; position: fixed; bottom: 0; width: inherit;">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -71,24 +93,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Bootstrap core JavaScript-->
 

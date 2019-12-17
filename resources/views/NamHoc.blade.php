@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>QUẢN LÝ HỌC SINH</title>
 
@@ -41,7 +42,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Năm học</h1>
+            <h5 class="h3 mb-0" style="color: #293c74; font-weight: bold;">Năm học</h5>
           </div>
 
           <div class="row justify-content-md-center">
@@ -49,8 +50,8 @@
             <div class="col-xl-3 col-lg-3">
               <div class="card shadow mb-6" style="margin-bottom: 50px">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary align-items-center text-center">Chọn năm học và kỳ làm việc</h6>
+                <div class="card-header py-3" style="background-color: #293c74">
+                  <h6 class="m-0 font-weight-bold align-items-center text-center" style="color: white">Chọn năm học và kỳ làm việc</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body" style="margin: auto; height: 18rem;">
@@ -58,10 +59,13 @@
                     @csrf
                  <div style="margin-top: 1rem">
                    <span style="margin-right: 2rem">Năm học:</span>
+
                     <select style="width: 10rem" name="namhoc">
+                    <option>2020 - 2021</option>
                     <option selected>2019 - 2020</option>
                     <option>2018 - 2019</option>
                     <option>2017 - 2018</option>
+
                   </select>
                  </div>
                     
@@ -89,16 +93,7 @@
       </div>
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer" style="background-color: black; position: fixed; bottom: 0; width: inherit;">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
+    
     </div>
     <!-- End of Content Wrapper -->
 
@@ -110,24 +105,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

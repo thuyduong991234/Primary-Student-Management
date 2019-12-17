@@ -13,7 +13,14 @@ class ChiTietLopHoc extends Model
     public function RenderMaCTLH()
     {
         $ctlophoccuoi = ChiTietLopHoc::orderBy('mactlophoc', 'desc')->first();
-        $matieptheo = ((int)($ctlophoccuoi->mactlophoc) + 1)."";
+        if($ctlophoccuoi)
+        {
+            $matieptheo = ((int)($ctlophoccuoi->mactlophoc) + 1)."";
+        }
+        else
+        {
+            $matieptheo = "20190000";;
+        }
         return $matieptheo;
     }
 
