@@ -19,7 +19,7 @@ PHP, Laravel Framework, MySQL
 #### Giáo viên hướng dẫn: 
 Huỳnh Nguyễn Khắc Huy
 
-#### Nhóm thhực hiện:
+#### Nhóm thực hiện:
 - Nguyễn Tấn Phát
 - Dương Thị Thu Thủy
 - Nguyễn Đức Phúc
