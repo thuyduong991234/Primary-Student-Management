@@ -5,7 +5,7 @@
 Ứng dụng web quản lý học sinh Trường tiểu học
 
 #### Công nghệ sử dụng:
-PHP, Laravel Framework
+PHP, Laravel Framework, MySQL
 
 #### Chức năng:
 - Quản lý học sinh (nhập hồ sơ học sinh, nhập kết quả học tập, quản lý chuyển đi, chuyển đến, thôi học, khen thưởng, kỷ luật, hoàn thành chương trình tiểu học) theo thông tư mới nhất của Bộ Giáo Dục.
