@@ -16,6 +16,9 @@ PHP, Laravel Framework, MySQL
 - Phân quyền (Quản trị, Giáo viên).
 - Nhập/ Xuất file Excel.
 
+#### Giáo viên hướng dẫn: 
+Huỳnh Nguyễn Khắc Huy
+
 #### Nhóm thhực hiện:
 - Nguyễn Tấn Phát
 - Dương Thị Thu Thủy
